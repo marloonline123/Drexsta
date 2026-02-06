@@ -45,6 +45,7 @@ export interface JobPosting {
 
 export interface JobPostingForm {
   job_requisition_id: number;
+  job_title_id: number;
   title: string;
   description: string;
   requirements: string;

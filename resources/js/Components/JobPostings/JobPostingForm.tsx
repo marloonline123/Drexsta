@@ -12,10 +12,12 @@ import { InputError } from '@/Components/Ui/InputError';
 import { useLanguage } from '@/Hooks/use-language';
 import { JobRequisition } from '@/Types/job-requisitions';
 import { EmploymentType } from '@/Types/employment-types';
+import { JobTitle } from '@/Types/job-titles';
 
 interface JobPostingFormProps {
     requisitions: JobRequisition[];
     employmentTypes: EmploymentType[];
+    jobTitles: JobTitle[];
     handleSubmit: (e: React.FormEvent) => void;
     data: JobPostingFormType;
     setData: (key: keyof JobPostingFormType, value: string | number | boolean) => void;
@@ -23,7 +25,7 @@ interface JobPostingFormProps {
     errors: Record<string, string>;
 }
 
-export default function JobPostingForm({ requisitions, employmentTypes, handleSubmit, data, setData, processing, errors }: JobPostingFormProps) {
+export default function JobPostingForm({ requisitions, employmentTypes, jobTitles, handleSubmit, data, setData, processing, errors }: JobPostingFormProps) {
     const { t } = useLanguage();
 
     return (
@@ -145,6 +147,31 @@ export default function JobPostingForm({ requisitions, employmentTypes, handleSu
                             </CardDescription>
                         </CardHeader>
                         <CardContent className="space-y-6">
+                            <div className="space-y-2">
+                                <Label htmlFor="job_title_id">{t('jobPostings.form.jobTitle')}</Label>
+                                <Select
+                                    value={data.job_title_id.toString()}
+                                    onValueChange={(value) => setData('job_title_id', value)}
+                                >
+                                    <SelectTrigger>
+                                        <SelectValue>{t('jobPostings.form.selectJobTitle')}</SelectValue>
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        {jobTitles.length > 0 ? jobTitles.map((jobTitle) => (
+                                            <SelectItem
+                                                key={jobTitle.id}
+                                                value={jobTitle.id.toString()}
+                                            >
+                                                {jobTitle.title}
+                                            </SelectItem>
+                                        )) : (
+                                            <div className='p-2 text-sm text-muted-foreground text-center'>{t('jobPostings.form.noJobTitle')}</div>
+                                        )}
+                                    </SelectContent>
+                                </Select>
+                                <InputError message={errors?.job_title_id} />
+                            </div>
+
                             <div className="space-y-2">
                                 <Label htmlFor="employment_type_id">{t('jobPostings.form.employmentType')}</Label>
                                 <Select

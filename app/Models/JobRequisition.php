@@ -36,6 +36,11 @@ class JobRequisition extends BaseModel
         'target_start_date' => 'date',
     ];
 
+    public function scopeApproved($query)
+    {
+        return $query->where('status', 'approved');
+    }
+
     public function company(): BelongsTo
     {
         return $this->belongsTo(Company::class);

@@ -9,17 +9,20 @@ import JobPostingFormComponent from '@/Components/JobPostings/JobPostingForm';
 import { JobRequisition } from '@/Types/job-requisitions';
 import { t } from 'i18next';
 import { EmploymentType } from '@/Types/employment-types';
+import { JobTitle } from '@/Types/job-titles';
 
 interface JobPostingsCreateProps {
   requisitions: JobRequisition[];
   employmentTypes: EmploymentType[];
+  jobTitles: JobTitle[];
 }
 
-export default function JobPostingsCreate({ requisitions, employmentTypes }: JobPostingsCreateProps) {
+export default function JobPostingsCreate({ requisitions, employmentTypes, jobTitles }: JobPostingsCreateProps) {
   console.log('requisitions', requisitions);
   
   const { data, setData, post, processing, errors } = useForm<JobPostingForm>({
     job_requisition_id: 0,
+    job_title_id: 0,
     title: '',
     description: '',
     requirements: '',
@@ -78,6 +81,7 @@ export default function JobPostingsCreate({ requisitions, employmentTypes }: Job
         <JobPostingFormComponent 
           requisitions={requisitions}
           employmentTypes={employmentTypes}
+          jobTitles={jobTitles}
           data={data}
           setData={setData}
           processing={processing}

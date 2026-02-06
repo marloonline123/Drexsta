@@ -25,6 +25,30 @@ const mainNavItems: NavItem[] = [
         icon: LayoutGrid,
         permission: null,
     },
+    {
+        title: t('nav.myAttendance'),
+        href: route('dashboard.my-attendance.index'),
+        icon: Clock,
+        permission: null,
+    },
+    {
+        title: t('nav.myLeaves'),
+        href: route('dashboard.my-leaves.index'),
+        icon: Calendar,
+        permission: null,
+    },
+    {
+        title: t('nav.myPayroll'),
+        href: route('dashboard.my-payroll.index'),
+        icon: Calculator,
+        permission: null,
+    },
+    {
+        title: t('nav.myLoans'),
+        href: route('dashboard.my-loans.index'),
+        icon: CreditCard,
+        permission: null,
+    },
 ];
 
 const adminstrationNavItems: NavItem[] = [
@@ -55,30 +79,6 @@ const hrmNavItems: NavItem[] = [
         href: route('dashboard.departments.index'),
         icon: Building,
         permission: 'departments.view',
-    },
-    {
-        title: t('nav.myAttendance'),
-        href: route('dashboard.my-attendance.index'),
-        icon: Clock,
-        permission: null,
-    },
-    {
-        title: t('nav.myLeaves'),
-        href: route('dashboard.my-leaves.index'),
-        icon: Calendar,
-        permission: null,
-    },
-    {
-        title: t('nav.myPayroll'),
-        href: route('dashboard.my-payroll.index'),
-        icon: Calculator,
-        permission: null,
-    },
-    {
-        title: t('nav.myLoans'),
-        href: route('dashboard.my-loans.index'),
-        icon: CreditCard,
-        permission: null,
     },
     {
         title: t('nav.attendance'),

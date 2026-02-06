@@ -5,10 +5,14 @@ namespace App\Http\Controllers\Dashboard;
 use App\Enums\JobPostingStatus;
 use App\Http\Controllers\BaseController;
 use App\Http\Requests\JobPostingRequest;
+use App\Http\Resources\EmploymentTypeResource;
 use App\Http\Resources\JobPostingResource;
 use App\Http\Resources\JobRequisitionResource;
+use App\Http\Resources\JobTitleResource;
+use App\Models\EmploymentType;
 use App\Models\JobPosting;
 use App\Models\JobRequisition;
+use App\Models\JobTitle;
 use App\Services\Business\JobPostingService;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -39,16 +43,16 @@ class JobPostingController extends BaseController
     public function create()
     {
         $this->authorize('create', JobPosting::class);
-        $company = request()->user()->activeCompany;
-        $employmentTypes = $company?->employmentTypes()->active()->get();
-        $requisitions = $company?->jobRequisitions()
-            ->with(['department', 'jobTitle'])
-            // ->where('status', 'approved')
+        $employmentTypes = EmploymentType::active()->get();
+        $jobTitles = JobTitle::active()->get();
+        $requisitions = JobRequisition::with(['department', 'jobTitle'])
+            ->approved()
             ->get();
 
         return Inertia::render('Dashboard/JobPostings/Create', [
             'requisitions' => JobRequisitionResource::collection($requisitions)->resolve(),
-            'employmentTypes' => $employmentTypes
+            'employmentTypes' => EmploymentTypeResource::collection($employmentTypes)->resolve(),
+            'jobTitles' => [],
         ]);
     }
 
@@ -89,18 +93,17 @@ class JobPostingController extends BaseController
     {
         $this->authorize('update', $jobPosting);
         $jobPosting->load(['jobRequisition.department', 'jobRequisition.jobTitle', 'jobRequisition.requester', 'company']);
-        $company = request()->user()->activeCompany;
-        $employmentTypes = $company?->employmentTypes()->active()->get();
-
-        $requisitions = JobRequisition::where('company_id', $company?->id)
-            ->with(['department', 'jobTitle'])
-            // ->where('status', 'approved')
+        $employmentTypes = EmploymentType::active()->get();
+        $jobTitles = JobTitle::active()->get();
+        $requisitions = JobRequisition::with(['department', 'jobTitle'])
+            ->approved()
             ->get();
 
         return Inertia::render('Dashboard/JobPostings/Edit', [
             'posting' => (new JobPostingResource($jobPosting))->resolve(),
-            'requisitions' => $requisitions,
-            'employmentTypes' => $employmentTypes
+            'requisitions' => JobRequisitionResource::collection($requisitions)->resolve(),
+            'employmentTypes' => EmploymentTypeResource::collection($employmentTypes)->resolve(),
+            'jobTitles' => JobTitleResource::collection($jobTitles)->resolve(),
         ]);
     }
 

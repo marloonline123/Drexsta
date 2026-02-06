@@ -17,7 +17,7 @@ class ApprovalPolicyController extends BaseController
      */
     public function index()
     {
-        $this->authorize('viewAny', ApprovalPolicy::class);
+        // $this->authorize('viewAny', ApprovalPolicy::class);
         $policies = ApprovalPolicy::with('company')
             ->latest()
             ->get();
