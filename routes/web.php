@@ -25,8 +25,19 @@ use App\Http\Controllers\Profile\PasswordController;
 use App\Http\Controllers\Profile\ProfileController;
 use App\Http\Controllers\SelectCompanyController;
 use App\Http\Controllers\Public\PublicPagesController;
+use App\Models\Permission;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+
+Route::get('/test', function () {
+    $user = Auth::user();
+    $allPer = Permission::get()->pluck('id')->toArray();
+
+    $user->sync($allPer, $user->active_company_id);
+
+    return $user->permissions;
+});
 
 Route::redirect('/', '/dashboard')->name('home');
 
