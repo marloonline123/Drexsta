@@ -47,18 +47,18 @@ class HandleInertiaRequests extends Middleware
             'name' => config('app.name'),
             'quote' => ['message' => trim($message), 'author' => trim($author)],
             'auth' => [
-                'user' => $user ? (new UserResource($user->load('activeCompany', 'roles', 'permissions')))->resolve() : null,
+                'user' => $user ? (new UserResource($user->load('activeCompany', 'roles', 'directPermissions')))->resolve() : null,
             ],
-            'ziggy' => fn (): array => [
+            'ziggy' => fn(): array => [
                 ...(new Ziggy)->toArray(),
                 'location' => $request->url(),
             ],
             'flash' => [
-                'success' => fn (): ?string => $request->session()->get('success'),
-                'error' => fn (): ?string => $request->session()->get('error'),
+                'success' => fn(): ?string => $request->session()->get('success'),
+                'error' => fn(): ?string => $request->session()->get('error'),
             ],
-            'sidebarCompanies' => fn (): array => $request->user() ? CompanyResource::collection($request->user()->companies()->with('users')->get())->resolve() : [],
-            'sidebarOpen' => ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
+            'sidebarCompanies' => fn(): array => $request->user() ? CompanyResource::collection($request->user()->companies()->with('users')->get())->resolve() : [],
+            'sidebarOpen' => !$request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
         ];
     }
 }

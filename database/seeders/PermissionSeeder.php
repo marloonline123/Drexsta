@@ -30,9 +30,4 @@ class PermissionSeeder extends Seeder
             $this->permissionRoleSetupService->setupForCompany($company->id);
         }
     }
-    
-    /**
-     * Create permissions and roles for a specific company or globally if no company_id provided.
-     */
-    
 }

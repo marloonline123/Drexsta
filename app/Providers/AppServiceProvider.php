@@ -21,15 +21,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Gate::before(function ($user, $ability) {
-            // if ($user->hasRole('Super Admin')) {
-            //     return true;
-            // }
-            // if (!$user->is_active) {
-            //     return Response::deny('Your account is disabled. Please contact the administrator.');
-            // }
-
-            return null;
+        // Bridge Laravel's $user->can() to our custom permission system
+        Gate::define('*', function ($user, $ability) {
+            return $user->hasPermission($ability, $user->active_company_id);
         });
     }
 }

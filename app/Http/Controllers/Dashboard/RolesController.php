@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use App\Models\Role;
 use App\Models\Permission;
-use Illuminate\Support\Facades\Log;
 
 class RolesController extends BaseController
 {
@@ -29,30 +28,9 @@ class RolesController extends BaseController
         // Also fetch permissions for the frontend
         $permissions = Permission::all();
 
-        // Group permissions by name pattern (e.g., users.view, users.create)
-        $groupedPermissions = [];
-        foreach ($permissions as $permission) {
-            $parts = explode('.', $permission->name);
-            $category = $parts[0] ?? 'general';
-            $action = $parts[1] ?? $permission->name;
-
-            if (!isset($groupedPermissions[$category])) {
-                $groupedPermissions[$category] = [];
-            }
-
-            $groupedPermissions[$category][] = [
-                'id' => $permission->id,
-                'name' => $permission->name,
-                'category' => $category,
-                'action' => $action,
-            ];
-        }
-
-        Log::debug($groupedPermissions);
-
         return Inertia::render('Dashboard/Roles/Index', [
             'roles' => $rolesCollection,
-            'permissions' => $groupedPermissions
+            'permissions' => $this->groupPermissions($permissions),
         ]);
     }
 
@@ -63,12 +41,15 @@ class RolesController extends BaseController
     {
         $this->authorize('create', Role::class);
         $data = $request->validated();
+        $user = Auth::user();
 
-        $role = Role::create($data);
+        $role = Role::create([
+            'name' => $data['name'],
+            'company_id' => $user->active_company_id,
+        ]);
 
         if (isset($data['permissions'])) {
-            $permissions = Permission::whereIn('id', $data['permissions'])->get();
-            $role->syncPermissions($permissions);
+            $role->syncPermissions($data['permissions'], $user->active_company_id);
         }
 
         return back()->with('success', 'Role created successfully');
@@ -81,12 +62,12 @@ class RolesController extends BaseController
     {
         $this->authorize('update', $role);
         $data = $request->validated();
+        $user = Auth::user();
 
         $role->update($data);
 
         if (isset($data['permissions'])) {
-            $permissions = Permission::whereIn('id', $data['permissions'])->get();
-            $role->syncPermissions($permissions);
+            $role->syncPermissions($data['permissions'], $user->active_company_id);
         }
 
         return back()->with('success', 'Role updated successfully');
@@ -108,27 +89,29 @@ class RolesController extends BaseController
      */
     public function permissions()
     {
-        $user = Auth::user();
-        $company = $user->activeCompany;
-        
-        if (!$company) {
-            return response()->json(['permissions' => []]);
-        }
-        
-        $permissions = Permission::where('company_id', $company->id)->get();
-        
-        // Group permissions by name pattern (e.g., users.view, users.create)
-        $groupedPermissions = [];
+        $permissions = Permission::all();
+
+        return response()->json([
+            'permissions' => $this->groupPermissions($permissions),
+        ]);
+    }
+
+    /**
+     * Group permissions by category (e.g. users.view → category 'users').
+     */
+    private function groupPermissions($permissions): array
+    {
+        $grouped = [];
         foreach ($permissions as $permission) {
             $parts = explode('.', $permission->name);
             $category = $parts[0] ?? 'general';
             $action = $parts[1] ?? $permission->name;
-            
-            if (!isset($groupedPermissions[$category])) {
-                $groupedPermissions[$category] = [];
+
+            if (!isset($grouped[$category])) {
+                $grouped[$category] = [];
             }
-            
-            $groupedPermissions[$category][] = [
+
+            $grouped[$category][] = [
                 'id' => $permission->id,
                 'name' => $permission->name,
                 'category' => $category,
@@ -136,8 +119,6 @@ class RolesController extends BaseController
             ];
         }
 
-        return response()->json([
-            'permissions' => $groupedPermissions
-        ]);
+        return $grouped;
     }
 }

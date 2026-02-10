@@ -16,7 +16,9 @@ use Inertia\Inertia;
 
 class EmployeeActionsController extends Controller
 {
-    public function __construct(protected AbilityService $abilityService) {}
+    public function __construct(protected AbilityService $abilityService)
+    {
+    }
 
     /**
      * Show the assign roles form.
@@ -121,11 +123,10 @@ class EmployeeActionsController extends Controller
             return back()->with('error', 'No active company found');
         }
 
-        // Get roles that belong to the current company
-        $roles = $company->roles()->whereIn('id', $request->input('roles', []))->get();
+        // Get role IDs that belong to the current company
+        $roleIds = $company->roles()->whereIn('roles.id', $request->input('roles', []))->pluck('roles.id')->toArray();
 
-        $employee->roles()->detach(); // ($roles->toArray(), ['company_id' => $company->id]);
-        $employee->roles()->attach($roles, ['company_id' => $company->id]);
+        $employee->syncRoles($roleIds, $company->id);
 
         return redirect()->route('dashboard.employees.edit', $employee)->with('success', 'Roles assigned successfully');
     }

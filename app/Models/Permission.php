@@ -2,18 +2,13 @@
 
 namespace App\Models;
 
-use App\Traits\HasCompanyScope;
-use Spatie\Permission\Models\Permission as SpatiePermission;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Model;
 
-class Permission extends SpatiePermission
+class Permission extends Model
 {
-    use HasCompanyScope;
-    /**
-     * Get the company that owns the permission.
-     */
-    public function company(): BelongsTo
-    {
-        return $this->belongsTo(Company::class);
-    }
+    protected $fillable = [
+        'name',
+        'description',
+        'meta_data',
+    ];
 }
