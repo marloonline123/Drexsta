@@ -14,8 +14,8 @@ class CompanyScope implements Scope
      */
     public function apply(Builder $builder, Model $model): void
     {
-        if (Auth::check() && ($companyId = Auth::user()->active_company_id)) {
-            $builder->where($model->qualifyColumn('company_id'), '=', $companyId);
-        }
+        // if (Auth::check() && ($companyId = Auth::user()->active_company_id)) {
+        //     $builder->where($model->qualifyColumn('company_id'), '=', $companyId);
+        // }
     }
 }

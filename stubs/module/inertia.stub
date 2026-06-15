@@ -1,0 +1,9 @@
+import React from 'react';
+
+export default function {{CLASS_NAME}}() {
+    return (
+        <div>
+            <h1>{{MODULE}} - {{CLASS_NAME}}</h1>
+        </div>
+    );
+}

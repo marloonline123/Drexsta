@@ -10,7 +10,32 @@ const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
 createInertiaApp({
     title: (title) => title ? `${title} - ${appName}` : appName,
-    resolve: (name) => resolvePageComponent(`./Pages/${name}.tsx`, import.meta.glob('./Pages/**/*.tsx')),
+    resolve: (name) => {
+        const defaultPages = import.meta.glob('./Pages/**/*.{js,jsx,ts,tsx}');
+        const modulePages = import.meta.glob('../../modules/**/Ui/Resources/Inertia/Pages/**/*.{js,jsx,ts,tsx}');
+
+        for (const ext of ['.jsx', '.tsx', '.js', '.ts']) {
+            const defaultPath = `./Pages/${name}${ext}`;
+            if (defaultPages[defaultPath]) {
+                return defaultPages[defaultPath]();
+            }
+        }
+
+        const parts = name.split('/');
+        const moduleName = parts.length > 1 ? parts[0] : name;
+        const pageName = parts.length > 1 ? parts.slice(1).join('/') : 'Index';
+
+        for (const path in modulePages) {
+            for (const ext of ['.jsx', '.tsx', '.js', '.ts']) {
+                const expectedSuffix = `${moduleName}/Ui/Resources/Inertia/Pages/${pageName}${ext}`;
+                if (path.toLowerCase().endsWith(expectedSuffix.toLowerCase())) {
+                    return modulePages[path]();
+                }
+            }
+        }
+
+        throw new Error(`Page component not found: ${name}`);
+    },
     setup({ el, App, props }) {
         const root = createRoot(el);
 

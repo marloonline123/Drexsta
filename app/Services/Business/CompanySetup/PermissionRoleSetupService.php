@@ -135,7 +135,7 @@ class PermissionRoleSetupService
 
         foreach ($permissions as $permission) {
             $created[] = Permission::firstOrCreate(
-                ['name' => $permission]
+                ['name' => $permission, 'guard_name' => 'web']
             );
         }
 
@@ -144,14 +144,18 @@ class PermissionRoleSetupService
 
     private function createRolesAndAssignPermissions(array $permissions, int $companyId): void
     {
-        $adminRole = Role::firstOrCreate(['name' => 'super-admin', 'company_id' => $companyId]);
-        $hrRole = Role::firstOrCreate(['name' => 'hr-manager', 'company_id' => $companyId]);
-        $financeRole = Role::firstOrCreate(['name' => 'finance-manager', 'company_id' => $companyId]);
-        $employeeRole = Role::firstOrCreate(['name' => 'employee', 'company_id' => $companyId]);
+        // super-admin is global
+        app(\Spatie\Permission\PermissionRegistrar::class)->setPermissionsTeamId(null);
+        $adminRole = Role::firstOrCreate(['name' => 'super-admin', 'guard_name' => 'web']);
+        $adminRole->syncPermissions($permissions);
 
-        // Assign permissions (pass Permission model arrays — syncPermissions handles both)
-        $adminRole->syncPermissions($permissions, $companyId);
+        // company-scoped roles
+        app(\Spatie\Permission\PermissionRegistrar::class)->setPermissionsTeamId($companyId);
+        $hrRole = Role::firstOrCreate(['name' => 'hr-manager', 'guard_name' => 'web', 'company_id' => $companyId]);
+        $financeRole = Role::firstOrCreate(['name' => 'finance-manager', 'guard_name' => 'web', 'company_id' => $companyId]);
+        $employeeRole = Role::firstOrCreate(['name' => 'employee', 'guard_name' => 'web', 'company_id' => $companyId]);
 
+        // Assign permissions
         $hrRole->syncPermissions($this->filterPermissions($permissions, [
             'users.view',
             'users.create',
@@ -213,19 +217,19 @@ class PermissionRoleSetupService
             'payment-methods.create',
             'payment-methods.edit',
             'payment-methods.delete',
-        ]), $companyId);
+        ]));
 
         $financeRole->syncPermissions($this->filterPermissions($permissions, [
             'payroll.view',
             'payroll.manage',
             'reports.view',
             'reports.create'
-        ]), $companyId);
+        ]));
 
         $employeeRole->syncPermissions($this->filterPermissions($permissions, [
             'employees.view',
             'attendance.view'
-        ]), $companyId);
+        ]));
     }
 
     private function filterPermissions(array $permissions, array $names): array

@@ -49,7 +49,7 @@ class RolesController extends BaseController
         ]);
 
         if (isset($data['permissions'])) {
-            $role->syncPermissions($data['permissions'], $user->active_company_id);
+            $role->syncPermissions($data['permissions']);
         }
 
         return back()->with('success', 'Role created successfully');
@@ -67,7 +67,7 @@ class RolesController extends BaseController
         $role->update($data);
 
         if (isset($data['permissions'])) {
-            $role->syncPermissions($data['permissions'], $user->active_company_id);
+            $role->syncPermissions($data['permissions']);
         }
 
         return back()->with('success', 'Role updated successfully');

@@ -1,0 +1,36 @@
+Array
+(
+    [0] => Array
+        (
+            [query] => select * from "role_user" where "user_id" = ?
+            [bindings] => Array
+                (
+                    [0] => 6
+                )
+
+            [time] => 2.29
+        )
+
+    [1] => Array
+        (
+            [query] => select * from "users" where "users"."id" = ? and "users"."deleted_at" is null limit 1
+            [bindings] => Array
+                (
+                    [0] => 6
+                )
+
+            [time] => 0.13
+        )
+
+    [2] => Array
+        (
+            [query] => select "roles".*, "role_user"."user_id" as "pivot_user_id", "role_user"."role_id" as "pivot_role_id" from "roles" inner join "role_user" on "roles"."id" = "role_user"."role_id" where "role_user"."user_id" = ?
+            [bindings] => Array
+                (
+                    [0] => 6
+                )
+
+            [time] => 0.14
+        )
+
+)

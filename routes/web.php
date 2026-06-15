@@ -26,56 +26,54 @@ use App\Http\Controllers\Profile\ProfileController;
 use App\Http\Controllers\SelectCompanyController;
 use App\Http\Controllers\Public\PublicPagesController;
 use App\Models\Permission;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/test', function () {
-    $user = Auth::user();
-    $allPer = Permission::get()->pluck('id')->toArray();
+    $user = User::with('roles')->find(6);
+    // $allPer = Permission::get()->pluck('id')->toArray();
 
-    $user->sync($allPer, $user->active_company_id);
+    // $user->sync($allPer, $user->active_company_id);
+    // $user->assignRole('super-admin');
 
-    return $user->permissions;
+    return $user;
 });
 
 Route::redirect('/', '/dashboard')->name('home');
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    // Route::get('/dashboard', function () {
-    //     return Inertia::render('dashboard');
-    // })->name('dashboard');
     Route::prefix('dashboard')->name('dashboard.')->middleware('hasActiveCompany')->group(function () {
+
+        Route::get('roles/permissions', [RolesController::class, 'permissions'])->name('roles.permissions');
+        Route::apiResource('roles', RolesController::class);
 
         // Main dashboard page
         Route::get('/', [MyDashboardController::class, 'index'])->name('index');
 
         // Companies
         Route::resource('companies', CompanyController::class);
-        
+
         // Departments
         Route::resource('departments', DepartmentController::class);
 
         // Employment Types
         Route::apiResource('employment-types', EmploymentTypeController::class);
-        
+
         // Job Titles
         Route::apiResource('job-titles', JobTitleController::class);
 
-        // Roles
-        Route::get('roles/permissions', [RolesController::class, 'permissions'])->name('roles.permissions');
-        Route::apiResource('roles', RolesController::class);
-        
         // Abilities
         Route::apiResource('abilities', AbilitiesController::class);
-        
+
         // Approval Policies
         Route::get('approval-policies', [ApprovalPolicyController::class, 'index'])->name('approval-policies.index');
         Route::patch('approval-policies/{approvalPolicy}', [ApprovalPolicyController::class, 'update'])->name('approval-policies.update');
-        
+
         // Job Requisitions
         Route::resource('job-requisitions', JobRequisitionController::class);
-        
+
         // Job Postings
         Route::resource('job-postings', AdminJobPostingController::class);
         Route::patch('job-postings/{jobPosting}/status', [AdminJobPostingController::class, 'updateStatus'])->name('job-postings.update-status');
@@ -123,36 +121,36 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('select-company', [SelectCompanyController::class, 'select'])->name('select-company.show');
     Route::post('select-company/{company}', [SelectCompanyController::class, 'save'])->name('select-company.save');
-    
+
     // HRM Routes
     Route::prefix('hrm')->group(function () {
         Route::get('employees', function () {
             return Inertia::render('hrm/employees');
         })->name('hrm.employees');
-        
+
         Route::get('attendance', function () {
             return Inertia::render('hrm/attendance');
         })->name('hrm.attendance');
-        
+
         Route::get('payroll', function () {
             return Inertia::render('hrm/payroll');
         })->name('hrm.payroll');
-        
+
         Route::get('leaves', function () {
             return Inertia::render('hrm/leaves');
         })->name('hrm.leaves');
-        
+
         Route::get('banks', function () {
             return Inertia::render('hrm/banks');
         })->name('hrm.banks');
     });
-    
+
     // Administration Routes
     Route::prefix('admin')->group(function () {
         Route::get('security', function () {
             return Inertia::render('admin/security');
         })->name('admin.security');
-        
+
         Route::get('users', function () {
             return Inertia::render('admin/users');
         })->name('admin.users');
@@ -174,5 +172,5 @@ Route::get('jobs/{company}/{jobPosting}/success/{applicationNumber}', [JobPostin
 Route::get('applications/{company}/{token}/edit', [JobPostingController::class, 'editApplication'])->name('applications.edit');
 Route::put('applications/{company}/{token}', [JobPostingController::class, 'updateApplication'])->name('applications.update');
 
-require __DIR__.'/settings.php';
-require __DIR__.'/auth.php';
+require __DIR__ . '/settings.php';
+require __DIR__ . '/auth.php';

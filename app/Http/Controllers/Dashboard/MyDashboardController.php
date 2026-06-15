@@ -29,7 +29,7 @@ class MyDashboardController extends BaseController
         // Quick actions
         $quickActions = $this->getQuickActions($user);
 
-        return Inertia::render('Dashboard/Main/MyDashboard', [
+        return Inertia::render('Dashboard/Dashboard', [
             'personalStats' => $personalStats,
             'roleStats' => $roleStats,
             'recentActivities' => $recentActivities,
@@ -46,10 +46,10 @@ class MyDashboardController extends BaseController
             ->first();
 
         // Leave balance
-        $leaveBalance = Leave::where('user_id', $user->id)
+        $leaveBalance = Leave::where('employee_id', $user->id)
             ->where('company_id', $companyId)
             ->whereYear('created_at', now()->year)
-            ->selectRaw('type, SUM(CASE WHEN status = "approved" THEN days ELSE 0 END) as used_days')
+            ->selectRaw("type, SUM(CASE WHEN status = 'approved' THEN CAST(julianday(end_date) - julianday(start_date) + 1 AS INTEGER) ELSE 0 END) as used_days")
             ->groupBy('type')
             ->get()
             ->pluck('used_days', 'type')
@@ -104,7 +104,7 @@ class MyDashboardController extends BaseController
             ->get();
 
         // Recent leaves
-        $recentLeaves = Leave::where('user_id', $user->id)
+        $recentLeaves = Leave::where('employee_id', $user->id)
             ->where('company_id', $companyId)
             ->latest()
             ->take(5)

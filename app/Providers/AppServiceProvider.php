@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Auth\Access\Response;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 
@@ -21,9 +22,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // Bridge Laravel's $user->can() to our custom permission system
-        Gate::define('*', function ($user, $ability) {
-            return $user->hasPermission($ability, $user->active_company_id);
-        });
+        JsonResource::withoutWrapping();
     }
 }

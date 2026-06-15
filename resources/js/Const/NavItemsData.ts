@@ -20,7 +20,7 @@ import {
 
 const mainNavItems: NavItem[] = [
     {
-        title: t('nav.myDashboard'),
+        title: t('nav.dashboard', 'Dashboard'),
         href: route('dashboard.index'),
         icon: LayoutGrid,
         permission: null,
@@ -52,12 +52,6 @@ const mainNavItems: NavItem[] = [
 ];
 
 const adminstrationNavItems: NavItem[] = [
-    {
-        title: t('nav.companyDashboard'),
-        href: route('dashboard.index'),
-        icon: LayoutGrid,
-        permission: 'companies.view',
-    },
     {
         title: t('nav.companies'),
         href: route('dashboard.companies.index'),

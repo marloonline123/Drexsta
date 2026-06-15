@@ -1,0 +1,11 @@
+{
+  "name": "{{MODULE}}",
+  "provider": "Modules\\{{CONTEXT}}\\{{MODULE}}\\{{MODULE}}ServiceProvider",
+  "enabled": true,
+  "permissions": [
+    { "name": "{{LOWER_MODULE}}.view" },
+    { "name": "{{LOWER_MODULE}}.create" },
+    { "name": "{{LOWER_MODULE}}.update" },
+    { "name": "{{LOWER_MODULE}}.delete" }
+  ]
+}

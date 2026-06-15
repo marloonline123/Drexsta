@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('approval_steps', function (Blueprint $table) {
             $table->id();
             $table->foreignId('approval_instance_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('responsibility_id')->constrained()->cascadeOnDelete();
+            // $table->foreignId('responsibility_id')->constrained()->cascadeOnDelete();
             $table->integer('step_order'); // 1, 2, 3...
             $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
             $table->foreignId('performed_by')->nullable()->constrained('users')->nullOnDelete();

@@ -28,9 +28,10 @@ class UserResource extends JsonResource
                 isset($this->pivot),
                 fn() => $this->pivot->role
             ),
-            'activeCompany' => $this->when('activeCompany', (new CompanyResource($this->activeCompany))->resolve()),
-            'roles' => $this->when('roles', RoleResource::collection($this->roles)->resolve()),
-            'permissions' => $this->when('permissions', PermissionResource::collection($this->getAllPermissions())->resolve()),
+            'activeCompany' => $this->whenLoaded('activeCompany', new CompanyResource($this->activeCompany)),
+            'roles' => $this->whenLoaded('roles', RoleResource::collection($this->roles)),
+            'permissions' => $this->whenLoaded('permissions', PermissionResource::collection($this->getAllPermissions())),
+            'permissions' => PermissionResource::collection($this->getAllPermissions()),
             'joined_at' => $this->created_at?->format('Y-m-d'),
         ];
     }

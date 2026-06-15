@@ -14,12 +14,12 @@ return new class extends Migration
         Schema::create('abilities', function (Blueprint $table) {
             $table->id();
             $table->foreignId('company_id')->constrained()->cascadeOnDelete();
-            $table->string('key')->unique(); // e.g. finance_approver
+            $table->string('key'); // e.g. finance_approver
             $table->string('label'); // e.g. Finance Approver
             $table->text('description')->nullable(); // Explain the responsibility
             $table->timestamps();
 
-            $table->unique(['company_id', 'key', 'label']);
+            $table->unique(['company_id', 'key']);
         });
     }
 

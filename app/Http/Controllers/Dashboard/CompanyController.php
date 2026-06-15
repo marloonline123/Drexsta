@@ -13,7 +13,9 @@ use Inertia\Response;
 
 class CompanyController extends BaseController
 {
-    public function __construct(protected FileService $fileService) {}
+    public function __construct(protected FileService $fileService)
+    {
+    }
 
     /**
      * Display a listing of the companies.
@@ -22,7 +24,7 @@ class CompanyController extends BaseController
      */
     public function index(): Response
     {
-        $this->authorize('viewAny', Company::class);
+        // $this->authorize('viewAny', Company::class);
         $user = Auth::user();
         $companies = $user->ownedCompanies()
             ->with('employees')

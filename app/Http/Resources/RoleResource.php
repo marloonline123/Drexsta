@@ -19,7 +19,7 @@ class RoleResource extends JsonResource
             'name' => $this->label,
             'company_id' => $this->company_id,
             'permissions' => $this->when('permissions', PermissionResource::collection($this->permissions)->resolve()),
-            'users_count' => $this->users->count(),
+            'users_count' => $this->whenLoaded('users', fn() => $this->users->count()),
             'created_at' => $this->created_at?->format('Y-m-d'),
             'updated_at' => $this->updated_at?->format('Y-m-d'),
         ];

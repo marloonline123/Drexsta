@@ -1,0 +1,14 @@
+<?php
+
+use Illuminate\Support\Facades\Route;
+use Modules\{{CONTEXT}}\{{MODULE}}\Ui\Http\Controllers\{{MODULE}}Controller;
+
+/*
+|--------------------------------------------------------------------------
+| {{MODULE}} Module Routes
+|--------------------------------------------------------------------------
+*/
+
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::apiResource('{{LOWER_MODULE}}s', {{MODULE}}Controller::class);
+});

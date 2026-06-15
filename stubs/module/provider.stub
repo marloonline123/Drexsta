@@ -1,0 +1,25 @@
+<?php
+
+namespace Modules\{{CONTEXT}}\{{MODULE}};
+
+use Illuminate\Support\ServiceProvider;
+use Modules\{{CONTEXT}}\{{MODULE}}\Domain\Contracts\{{MODULE}}Service;
+use Modules\{{CONTEXT}}\{{MODULE}}\Infrastructure\Services\Laravel{{MODULE}}Service;
+
+class {{MODULE}}ServiceProvider extends ServiceProvider
+{
+    public function register()
+    {
+        $this->app->bind(
+            {{MODULE}}Service::class,
+            Laravel{{MODULE}}Service::class
+        );
+    }
+
+    public function boot()
+    {
+        $this->loadRoutesFrom(__DIR__ . '/Ui/Routes/{{LOWER_MODULE}}.php');
+        $this->loadMigrationsFrom(__DIR__ . '/Database/Migrations');
+        $this->loadViewsFrom(__DIR__ . '/Ui/Resources/Views', '{{LOWER_MODULE}}');
+    }
+}

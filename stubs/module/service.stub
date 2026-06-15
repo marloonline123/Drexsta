@@ -1,0 +1,10 @@
+<?php
+
+namespace {{NAMESPACE}};
+
+use Modules\{{CONTEXT}}\{{MODULE}}\Domain\Contracts\{{BASE_NAME}}Service;
+
+class {{CLASS_NAME}} implements {{BASE_NAME}}Service
+{
+    //
+}
