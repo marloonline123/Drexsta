@@ -31,7 +31,6 @@ class UserResource extends JsonResource
             'activeCompany' => $this->whenLoaded('activeCompany', new CompanyResource($this->activeCompany)),
             'roles' => $this->whenLoaded('roles', RoleResource::collection($this->roles)),
             'permissions' => $this->whenLoaded('permissions', PermissionResource::collection($this->getAllPermissions())),
-            'permissions' => PermissionResource::collection($this->getAllPermissions()),
             'joined_at' => $this->created_at?->format('Y-m-d'),
         ];
     }

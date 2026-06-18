@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Dashboard\Employee;
 
 use App\Events\EmployeeCreated;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\BaseController;
 use App\Http\Requests\EmployeeRequest;
 use App\Http\Requests\UpdateEmployeeRequest;
 use App\Http\Resources\EmployeeResource;
@@ -14,13 +14,14 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 
-class EmployeesResourceController extends Controller
+class EmployeesResourceController extends BaseController
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
+        $this->authorize('viewAny', User::class);
         $user = Auth::user();
         $company = $user->activeCompany()->with('employees')->first();
         
@@ -50,6 +51,7 @@ class EmployeesResourceController extends Controller
      */
     public function store(EmployeeRequest $request)
     {
+        $this->authorize('create', User::class);
         $user = Auth::user();
         $company = $user->activeCompany;
         
@@ -62,6 +64,7 @@ class EmployeesResourceController extends Controller
             'phone' => $data['phone'],
             'password' => Hash::make('password$'),
             'active_company_id' => $company->id,
+            'email_verified_at' => now(),
         ]);
         
         // Attach the employee to the company
@@ -77,7 +80,7 @@ class EmployeesResourceController extends Controller
      */
     public function show(User $employee)
     {
-        // $this->authorize('view', $employee);
+        $this->authorize('view', $employee);
         
         $employee->load('roles', 'permissions', 'abilities', 'activeCompany', 'departments', 'jobTitles');
         return Inertia::render('Dashboard/Employees/Show', [
@@ -90,7 +93,7 @@ class EmployeesResourceController extends Controller
      */
     public function edit(User $employee)
     {
-        // $this->authorize('update', $employee);
+        $this->authorize('update', $employee);
         
         $employee->load('roles', 'permissions', 'abilities', 'activeCompany', 'departments', 'jobTitles');
         
@@ -104,7 +107,7 @@ class EmployeesResourceController extends Controller
      */
     public function update(UpdateEmployeeRequest $request, User $employee)
     {
-        // $this->authorize('update', $employee);
+        $this->authorize('update', $employee);
         
         $data = $request->validated();
         
@@ -118,7 +121,7 @@ class EmployeesResourceController extends Controller
      */
     public function destroy(User $employee)
     {
-        // $this->authorize('delete', $employee);
+        $this->authorize('delete', $employee);
         
         $employee->delete();
 

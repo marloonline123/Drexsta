@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Dashboard\Employee;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\BaseController;
 use App\Http\Resources\AbilityResource;
 use App\Http\Resources\DepartmentResource;
 use App\Http\Resources\EmployeeResource;
@@ -14,7 +14,7 @@ use App\Services\Business\AbilityService;
 use App\Models\User;
 use Inertia\Inertia;
 
-class EmployeeActionsController extends Controller
+class EmployeeActionsController extends BaseController
 {
     public function __construct(protected AbilityService $abilityService)
     {
@@ -25,7 +25,7 @@ class EmployeeActionsController extends Controller
      */
     public function showAssignRoles(User $employee)
     {
-        // $this->authorize('update', $employee);
+        $this->authorize('update', $employee);
 
         $user = Auth::user();
         $company = $user->activeCompany;
@@ -46,7 +46,7 @@ class EmployeeActionsController extends Controller
      */
     public function showAssignAbilities(User $employee)
     {
-        // $this->authorize('update', $employee);
+        $this->authorize('update', $employee);
 
         $user = Auth::user();
         $company = $user->activeCompany;
@@ -67,7 +67,7 @@ class EmployeeActionsController extends Controller
      */
     public function showAssigndepartments(User $employee)
     {
-        // $this->authorize('update', $employee);
+        $this->authorize('update', $employee);
 
         $user = Auth::user();
         $company = $user->activeCompany;
@@ -88,7 +88,7 @@ class EmployeeActionsController extends Controller
      */
     public function showAssignJobTitles(User $employee)
     {
-        // $this->authorize('update', $employee);
+        $this->authorize('update', $employee);
 
         $user = Auth::user();
         $company = $user->activeCompany;
@@ -109,8 +109,7 @@ class EmployeeActionsController extends Controller
      */
     public function assignRoles(Request $request, User $employee)
     {
-        // $this->authorize('update', $employee);
-        // dd($request->all());
+        $this->authorize('update', $employee);
         $request->validate([
             'roles' => 'required|array',
             'roles.*' => 'exists:roles,id',
@@ -136,8 +135,7 @@ class EmployeeActionsController extends Controller
      */
     public function assignAbilities(Request $request, User $employee)
     {
-        // $this->authorize('update', $employee);
-        // dd($request->all());
+        $this->authorize('update', $employee);
         $request->validate([
             'abilities' => 'required|array',
             'abilities.*' => 'required|exists:abilities,id',
@@ -160,8 +158,7 @@ class EmployeeActionsController extends Controller
      */
     public function assignDepartments(Request $request, User $employee)
     {
-        // $this->authorize('update', $employee);
-        // dd($request->all());
+        $this->authorize('update', $employee);
         $request->validate([
             'departments' => 'required|array',
             'departments.*' => 'required|exists:departments,id',
@@ -184,8 +181,7 @@ class EmployeeActionsController extends Controller
      */
     public function assignJobTitles(Request $request, User $employee)
     {
-        // $this->authorize('update', $employee);
-        // dd($request->all());
+        $this->authorize('update', $employee);
         $request->validate([
             'jobTitles' => 'required|array',
             'jobTitles.*' => 'required|exists:job_titles,id',

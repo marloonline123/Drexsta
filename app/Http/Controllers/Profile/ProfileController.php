@@ -12,7 +12,6 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Auth as FacadesAuth;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -97,7 +96,7 @@ class ProfileController extends Controller
      */
     public function updatePaymentData(UpdatePaymentMethodsRequest $request): RedirectResponse
     {
-        $user = FacadesAuth::user();
+        $user = Auth::user();
         $companyId = $user->active_company_id;
         $data = $request->validated();
 

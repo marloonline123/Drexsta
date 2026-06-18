@@ -28,12 +28,12 @@ class CompanyResource extends JsonResource
             ? Storage::disk(config('filesystems.default'))->url($this->logo_path)
             : null,
             'is_active' => $this->is_active,
-            'employees_count' => $this->whenLoaded('users', function () {
-                return $this->employees()->count();
+            'employees_count' => $this->whenLoaded('employees', function () {
+                return $this->employees->count();
             }),
-            'myRole' => $this->when('users', function () {
+            'myRole' => $this->whenLoaded('users', function () {
                 return $this->users->firstWhere('id', request()->user()->id)?->pivot->role;
-            }) ?? null,
+            }),
             'myJobTitles' => $this->whenLoaded('jobTitles', function () {
                 return $this->jobTitles->map(fn($jobTitle) => [
                     'id' => $jobTitle->id,

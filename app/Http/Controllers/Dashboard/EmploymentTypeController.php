@@ -8,7 +8,6 @@ use App\Http\Resources\EmploymentTypeResource;
 use App\Models\EmploymentType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 
 class EmploymentTypeController extends BaseController
@@ -32,10 +31,8 @@ class EmploymentTypeController extends BaseController
         $employmentTypesCollection = EmploymentTypeResource::collection($employmentTypes)
             ->additional(['meta' => ['total_employment_types' => $totalEmploymentTypes]]);
 
-        Log::debug($employmentTypes);
-        // For regular page loads, return Inertia response
         return Inertia::render('Dashboard/EmploymentTypes/Index', [
-            'employmentTypes' => $employmentTypesCollection ?? [],
+            'employmentTypes' => $employmentTypesCollection,
         ]);
     }
 

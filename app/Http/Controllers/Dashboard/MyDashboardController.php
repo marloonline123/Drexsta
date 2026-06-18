@@ -40,7 +40,7 @@ class MyDashboardController extends BaseController
     private function getPersonalStats(User $user, int $companyId): array
     {
         // Today's attendance
-        $todayAttendance = Attendance::where('user_id', $user->id)
+        $todayAttendance = Attendance::where('employee_id', $user->id)
             ->where('company_id', $companyId)
             ->whereDate('date', today())
             ->first();
@@ -56,13 +56,13 @@ class MyDashboardController extends BaseController
             ->toArray();
 
         // Monthly hours
-        $monthlyHours = Attendance::where('user_id', $user->id)
+        $monthlyHours = Attendance::where('employee_id', $user->id)
             ->where('company_id', $companyId)
             ->whereMonth('date', now()->month)
-            ->sum('hours_worked');
+            ->sum('worked_hours');
 
         // Next payslip
-        $nextPayslip = Payslip::where('user_id', $user->id)
+        $nextPayslip = Payslip::where('employee_id', $user->id)
             ->where('company_id', $companyId)
             ->latest()
             ->first();

@@ -24,7 +24,7 @@ class CompanyController extends BaseController
      */
     public function index(): Response
     {
-        // $this->authorize('viewAny', Company::class);
+        $this->authorize('viewAny', Company::class);
         $user = Auth::user();
         $companies = $user->ownedCompanies()
             ->with('employees')

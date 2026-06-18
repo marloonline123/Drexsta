@@ -24,11 +24,11 @@ class EmployeeResource extends JsonResource
             'created_at' => $this->created_at?->format('Y-m-d H:i:s'),
             'updated_at' => $this->updated_at?->format('Y-m-d H:i:s'),
             'deleted_at' => $this->deleted_at?->format('Y-m-d H:i:s'),
-            'roles' => $this->when('roles', RoleResource::collection($this->roles)->resolve()),
-            'permissions' => $this->when('permissions', PermissionResource::collection($this->getAllPermissions())->resolve()),
-            'abilities' => $this->when('abilities', $this->abilities),
-            'departments' => $this->when('departments', $this->departments),
-            'jobTitles' => $this->when('jobTitles', $this->jobTitles),
+            'roles' => $this->whenLoaded('roles', fn() => RoleResource::collection($this->roles)->resolve()),
+            'permissions' => $this->whenLoaded('permissions', fn() => PermissionResource::collection($this->getAllPermissions())->resolve()),
+            'abilities' => $this->whenLoaded('abilities'),
+            'departments' => $this->whenLoaded('departments'),
+            'jobTitles' => $this->whenLoaded('jobTitles'),
         ];
     }
 }

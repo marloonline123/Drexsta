@@ -17,12 +17,12 @@ class JobPostingService
             'job_requisition_id' => $requisition->id,
             'number' => $this->generateJobPostingNumber($company->id),
             'title' => $requisition->jobTitle->title,
-            'slug' => uniqueSlug(JobPosting::class, $company->id, $data['title'] ?? $requisition->jobTitle->title),
+            'slug' => uniqueSlug(JobPosting::class, $data['title'] ?? $requisition->jobTitle->title),
             'description' => $requisition->job_description,
             'requirements' => $requisition->requirements,
             'min_salary' => $requisition->min_salary,
             'max_salary' => $requisition->max_salary,
-            'employment_type_id' => $requisition->employment_type_id ?? 'full_time',
+            'employment_type_id' => $requisition->employment_type_id,
         ]);
 
         return $posting;

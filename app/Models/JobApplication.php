@@ -46,8 +46,8 @@ class JobApplication extends BaseModel
      */
     public function canBeEdited(): bool
     {
-        return $this->status !== 'under_review' && 
-               $this->jobPosting->status !== 'closed' &&
+        return $this->status !== JobApplicationStatus::UNDER_REVIEW && 
+               $this->jobPosting->status !== \App\Enums\JobPostingStatus::CLOSED &&
                $this->token_expires_at && 
                $this->token_expires_at->isFuture();
     }

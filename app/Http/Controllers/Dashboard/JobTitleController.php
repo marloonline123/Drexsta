@@ -8,7 +8,6 @@ use App\Http\Resources\JobTitleResource;
 use App\Models\JobTitle;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 
 class JobTitleController extends BaseController
@@ -32,10 +31,8 @@ class JobTitleController extends BaseController
         $jobTitlesCollection = JobTitleResource::collection($jobTitles)
             ->additional(['meta' => ['total_job_titles' => $totalJobTitles]]);
 
-        Log::debug($jobTitles);
-        // For regular page loads, return Inertia response
         return Inertia::render('Dashboard/JobTitles/Index', [
-            'jobTitles' => $jobTitlesCollection ?? [],
+            'jobTitles' => $jobTitlesCollection,
         ]);
     }
 

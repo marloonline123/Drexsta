@@ -103,11 +103,13 @@ class DepartmentController extends BaseController
         $this->authorize('update', $department);
         $data = $request->validated();
         $department->fill($data);
-        if ($department->isDirty('manager_id')) {
+
+        $currentManagerId = $department->managerRelation()->first()?->id;
+        if (isset($data['manager_id']) && $data['manager_id'] !== $currentManagerId) {
             // Remove old manager only
             $department->employees()
-            ->wherePivot('role', 'manager')
-            ->detach();
+                ->wherePivot('role', 'manager')
+                ->detach();
 
             // Attach the new manager
             $department->employees()->syncWithoutDetaching([
@@ -117,9 +119,8 @@ class DepartmentController extends BaseController
             ]);
         }
         $department->save();
-        event(new DepartmentCreated($department));
 
-        return back()->with('success', 'Department Updated successfully.');
+        return back()->with('success', 'Department updated successfully.');
     }
 
     /**
