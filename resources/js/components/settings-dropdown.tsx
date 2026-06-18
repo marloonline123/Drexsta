@@ -6,7 +6,7 @@ import { Monitor, Moon, Sun, Globe, Settings } from 'lucide-react';
 import { HTMLAttributes } from 'react';
 
 export default function SettingsDropdown({ className = '', ...props }: HTMLAttributes<HTMLDivElement>) {
-    const { appearance, updateAppearance } = useAppearance();
+    const { theme, setTheme } = useAppearance();
     const { currentLanguage, changeLanguage, t } = useLanguage();
 
     const languages = [
@@ -21,7 +21,7 @@ export default function SettingsDropdown({ className = '', ...props }: HTMLAttri
     ];
 
     const currentLang = languages.find(lang => lang.code === currentLanguage);
-    const currentTheme = themeOptions.find(theme => theme.value === appearance);
+    const currentTheme = themeOptions.find(t => t.value === theme);
 
     return (
         <div className={className} {...props}>
@@ -34,18 +34,18 @@ export default function SettingsDropdown({ className = '', ...props }: HTMLAttri
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="w-56">
                     <DropdownMenuLabel>{t('settings.appearance')}</DropdownMenuLabel>
-                    {themeOptions.map((theme) => {
-                        const Icon = theme.icon;
+                    {themeOptions.map((themeOption) => {
+                        const Icon = themeOption.icon;
                         return (
                             <DropdownMenuItem 
-                                key={theme.value}
-                                onClick={() => updateAppearance(theme.value as 'light' | 'dark' | 'system')}
-                                className={appearance === theme.value ? 'bg-accent' : ''}
+                                key={themeOption.value}
+                                onClick={() => setTheme(themeOption.value as 'light' | 'dark' | 'system')}
+                                className={theme === themeOption.value ? 'bg-accent' : ''}
                             >
                                 <span className="flex items-center gap-2">
                                     <Icon className="h-4 w-4" />
-                                    {theme.label}
-                                    {appearance === theme.value && (
+                                    {themeOption.label}
+                                    {theme === themeOption.value && (
                                         <span className="ml-auto text-xs text-primary">✓</span>
                                     )}
                                 </span>
