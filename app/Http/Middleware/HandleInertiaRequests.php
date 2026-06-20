@@ -59,6 +59,34 @@ class HandleInertiaRequests extends Middleware
             ],
             'sidebarCompanies' => fn(): array => $request->user() ? CompanyResource::collection($request->user()->companies()->with('users')->get())->resolve() : [],
             'sidebarOpen' => !$request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
+            'translation' => fn(): array => $this->getTranslations($request),
         ];
+    }
+
+    /**
+     * Load translations from lang/{locale}.json file.
+     */
+    private function getTranslations(Request $request): array
+    {
+        // Priority: cookie > session > Accept-Language header > default 'en'
+        $locale = $request->cookie('language')
+            ?? $request->session()->get('language')
+            ?? (in_array(substr($request->header('Accept-Language', 'en'), 0, 2), ['en', 'ar'], true)
+                ? substr($request->header('Accept-Language', 'en'), 0, 2)
+                : 'en');
+
+        // Validate locale to prevent directory traversal
+        $allowedLocales = ['en', 'ar'];
+        if (!in_array($locale, $allowedLocales, true)) {
+            $locale = 'en';
+        }
+
+        $path = resource_path("lang/{$locale}.json");
+
+        if (!file_exists($path)) {
+            return [];
+        }
+
+        return json_decode(file_get_contents($path), true) ?? [];
     }
 }

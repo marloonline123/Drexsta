@@ -9,8 +9,7 @@ class PermissionRoleSetupService
 {
     public function setupForCompany(int $companyId): void
     {
-        $permissions = $this->getDefaultPermissions();
-        $createdPermissions = $this->createPermissions($permissions);
+        $createdPermissions = $this->createPermissions();
 
         $this->createRolesAndAssignPermissions($createdPermissions, $companyId);
     }
@@ -129,17 +128,18 @@ class PermissionRoleSetupService
         ];
     }
 
-    private function createPermissions(array $permissions): array
+    private function createPermissions(): array
     {
-        $created = [];
+        $permissions = $this->getDefaultPermissions();
+        $createdPermissions = [];
 
         foreach ($permissions as $permission) {
-            $created[] = Permission::firstOrCreate(
+            $createdPermissions[] = Permission::firstOrCreate(
                 ['name' => $permission, 'guard_name' => 'web']
             );
         }
 
-        return $created;
+        return $createdPermissions;
     }
 
     private function createRolesAndAssignPermissions(array $permissions, int $companyId): void

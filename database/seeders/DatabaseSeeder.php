@@ -16,7 +16,12 @@ class DatabaseSeeder extends Seeder
             CompanyAndUserSeeder::class ,
         ]);
 
-        // 2. Setup Permissions and Roles for the created companies
+        // 2. Setup Abilities and Approval Policies for the created companies
+        $this->call([
+            ApprovalPolicySeeder::class
+        ]);
+
+        // 3. Setup Permissions and Roles for the created companies
         $this->call([
             PermissionSeeder::class ,
         ]);
@@ -39,6 +44,11 @@ class DatabaseSeeder extends Seeder
         // 6. Setup Operations Data (Attendance, Leaves, Performance Reviews)
         $this->call([
             OperationsSeeder::class ,
+        ]);
+
+        // 7. Assign Roles to Users
+        $this->call([
+            AssignUserRoleSeeder::class
         ]);
     }
 }

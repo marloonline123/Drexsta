@@ -25,7 +25,7 @@ export function NavMain() {
                             .map((item) => (
                                 <SidebarMenuItem key={item.title}>
                                     <SidebarMenuButton asChild isActive={page.url.startsWith(item.href)} tooltip={{ children: item.title }}>
-                                        <Link href={item.href} prefetch>
+                                        <Link href={item.href} prefetch preserveScroll>
                                             {item.icon && <item.icon />}
                                             <span>{item.title}</span>
                                         </Link>

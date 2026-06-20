@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 
-class EmployeesResourceController extends BaseController
+class EmployeeController extends BaseController
 {
     /**
      * Display a listing of the resource.

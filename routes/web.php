@@ -6,7 +6,7 @@ use App\Http\Controllers\Dashboard\CompanyController;
 use App\Http\Controllers\Dashboard\DepartmentController;
 use App\Http\Controllers\Dashboard\Employee\EmployeeActionsController;
 use App\Http\Controllers\Dashboard\Employee\EmployeeExcelController;
-use App\Http\Controllers\Dashboard\Employee\EmployeesResourceController;
+use App\Http\Controllers\Dashboard\Employee\EmployeeController;
 use App\Http\Controllers\Dashboard\Employee\UpdateEmployeePasswordController;
 use App\Http\Controllers\Dashboard\EmploymentTypeController;
 use App\Http\Controllers\Dashboard\JobApplicationController;
@@ -73,7 +73,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::resource('payment-methods', PaymentMethodController::class);
 
         // Employees
-        Route::resource('employees', EmployeesResourceController::class);
+        Route::resource('employees', EmployeeController::class);
         Route::patch('employees/{employee}/update-password', [UpdateEmployeePasswordController::class, 'updatePassword'])->name('employees.update-password');
         Route::get('employees/{employee}/assign-roles', [EmployeeActionsController::class, 'showAssignRoles'])->name('employees.assign-roles');
         Route::get('employees/{employee}/assign-abilities', [EmployeeActionsController::class, 'showAssignAbilities'])->name('employees.assign-abilities');
