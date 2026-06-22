@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Dashboard\Employee;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\BaseController;
 use Illuminate\Http\Request;
 use App\Exports\EmployeesExport;
 use App\Imports\EmployeesImport;
 use Maatwebsite\Excel\Facades\Excel;
 
-class EmployeeExcelController extends Controller
+class EmployeeExcelController extends BaseController
 {
 
     /**
@@ -16,6 +16,8 @@ class EmployeeExcelController extends Controller
      */
     public function export()
     {
+        $this->authorize('admin.employees.view');
+
         return Excel::download(new EmployeesExport, 'employees.xlsx');
     }
 
@@ -24,6 +26,8 @@ class EmployeeExcelController extends Controller
      */
     public function import(Request $request)
     {
+        $this->authorize('admin.employees.create');
+
         $request->validate([
             'file' => 'required|mimes:xlsx,xls,csv',
         ]);

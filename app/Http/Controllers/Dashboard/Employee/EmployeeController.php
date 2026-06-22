@@ -21,7 +21,7 @@ class EmployeeController extends BaseController
      */
     public function index()
     {
-        $this->authorize('viewAny', User::class);
+        $this->authorize('admin.employees.view');
         $user = Auth::user();
         $company = $user->activeCompany()->with('employees')->first();
         
@@ -43,6 +43,8 @@ class EmployeeController extends BaseController
      */
     public function create()
     {
+        $this->authorize('admin.employees.create');
+
         return Inertia::render('Dashboard/Employees/Create');
     }
 
@@ -51,7 +53,7 @@ class EmployeeController extends BaseController
      */
     public function store(EmployeeRequest $request)
     {
-        $this->authorize('create', User::class);
+        $this->authorize('admin.employees.create');
         $user = Auth::user();
         $company = $user->activeCompany;
         
@@ -80,7 +82,7 @@ class EmployeeController extends BaseController
      */
     public function show(User $employee)
     {
-        $this->authorize('view', $employee);
+        $this->authorize('admin.employees.view');
         
         $employee->load('roles', 'permissions', 'abilities', 'activeCompany', 'departments', 'jobTitles');
         return Inertia::render('Dashboard/Employees/Show', [
@@ -93,7 +95,7 @@ class EmployeeController extends BaseController
      */
     public function edit(User $employee)
     {
-        $this->authorize('update', $employee);
+        $this->authorize('admin.employees.edit');
         
         $employee->load('roles', 'permissions', 'abilities', 'activeCompany', 'departments', 'jobTitles');
         
@@ -107,7 +109,7 @@ class EmployeeController extends BaseController
      */
     public function update(UpdateEmployeeRequest $request, User $employee)
     {
-        $this->authorize('update', $employee);
+        $this->authorize('admin.employees.edit');
         
         $data = $request->validated();
         
@@ -121,7 +123,7 @@ class EmployeeController extends BaseController
      */
     public function destroy(User $employee)
     {
-        $this->authorize('delete', $employee);
+        $this->authorize('admin.employees.delete');
         
         $employee->delete();
 

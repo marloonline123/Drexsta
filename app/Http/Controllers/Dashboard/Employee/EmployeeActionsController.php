@@ -25,7 +25,7 @@ class EmployeeActionsController extends BaseController
      */
     public function showAssignRoles(User $employee)
     {
-        $this->authorize('update', $employee);
+        $this->authorize('admin.employees.edit');
 
         $user = Auth::user();
         $company = $user->activeCompany;
@@ -46,7 +46,7 @@ class EmployeeActionsController extends BaseController
      */
     public function showAssignAbilities(User $employee)
     {
-        $this->authorize('update', $employee);
+        $this->authorize('admin.employees.edit');
 
         $user = Auth::user();
         $company = $user->activeCompany;
@@ -67,7 +67,7 @@ class EmployeeActionsController extends BaseController
      */
     public function showAssigndepartments(User $employee)
     {
-        $this->authorize('update', $employee);
+        $this->authorize('admin.employees.edit');
 
         $user = Auth::user();
         $company = $user->activeCompany;
@@ -88,7 +88,7 @@ class EmployeeActionsController extends BaseController
      */
     public function showAssignJobTitles(User $employee)
     {
-        $this->authorize('update', $employee);
+        $this->authorize('admin.employees.edit');
 
         $user = Auth::user();
         $company = $user->activeCompany;
@@ -109,7 +109,7 @@ class EmployeeActionsController extends BaseController
      */
     public function assignRoles(Request $request, User $employee)
     {
-        $this->authorize('update', $employee);
+        $this->authorize('admin.employees.edit');
         $request->validate([
             'roles' => 'required|array',
             'roles.*' => 'exists:roles,id',
@@ -135,7 +135,7 @@ class EmployeeActionsController extends BaseController
      */
     public function assignAbilities(Request $request, User $employee)
     {
-        $this->authorize('update', $employee);
+        $this->authorize('admin.employees.edit');
         $request->validate([
             'abilities' => 'required|array',
             'abilities.*' => 'required|exists:abilities,id',
@@ -158,7 +158,7 @@ class EmployeeActionsController extends BaseController
      */
     public function assignDepartments(Request $request, User $employee)
     {
-        $this->authorize('update', $employee);
+        $this->authorize('admin.employees.edit');
         $request->validate([
             'departments' => 'required|array',
             'departments.*' => 'required|exists:departments,id',
@@ -181,7 +181,7 @@ class EmployeeActionsController extends BaseController
      */
     public function assignJobTitles(Request $request, User $employee)
     {
-        $this->authorize('update', $employee);
+        $this->authorize('admin.employees.edit');
         $request->validate([
             'jobTitles' => 'required|array',
             'jobTitles.*' => 'required|exists:job_titles,id',

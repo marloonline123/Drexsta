@@ -2,9 +2,8 @@
 
 namespace App\Providers;
 
-use Illuminate\Auth\Access\Response;
+use App\Authorization\Gates\GateRegistrar;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -23,5 +22,6 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         JsonResource::withoutWrapping();
+        GateRegistrar::register();
     }
 }
