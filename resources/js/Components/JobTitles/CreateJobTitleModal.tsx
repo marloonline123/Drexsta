@@ -1,5 +1,6 @@
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/Components/Ui/dialog';
+import SharedModal from '../Shared/SharedModal';
 import JobTitleForm from './JobTitleForm';
+import useTranslation from '@/Hooks/use-translation';
 
 interface CreateJobTitleModalProps {
     open: boolean;
@@ -8,23 +9,21 @@ interface CreateJobTitleModalProps {
 }
 
 export default function CreateJobTitleModal({ open, onOpenChange, onSuccess }: CreateJobTitleModalProps) {
+    const { translate } = useTranslation();
     return (
-        <Dialog open={open} onOpenChange={onOpenChange}>
-            <DialogContent className="sm:max-w-[500px]">
-                <DialogHeader>
-                    <DialogTitle>Create Job Title</DialogTitle>
-                    <DialogDescription>
-                        Add a new job title to categorize your employee positions.
-                    </DialogDescription>
-                </DialogHeader>
-
-                {/* Job Title Form */}
+        <SharedModal
+            title={translate('jobTitles.modals.create.title')}
+            description={translate('jobTitles.modals.create.description')}
+            form={
                 <JobTitleForm
                     action={route('dashboard.job-titles.store')}
                     method="post"
                     onSuccess={onSuccess}
                 />
-            </DialogContent>
-        </Dialog>
+            }
+            open={open}
+            onOpenChange={onOpenChange}
+        />
+        
     );
 }

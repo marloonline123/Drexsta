@@ -20,31 +20,31 @@ import {
 
 const mainNavItems: NavItem[] = [
     {
-        title: t('nav.dashboard', 'Dashboard'),
+        title: 'nav.dashboard',
         href: route('dashboard.index'),
         icon: LayoutGrid,
         permission: null,
     },
     {
-        title: t('nav.myAttendance'),
+        title: 'nav.myAttendance',
         href: route('dashboard.my-attendance.index'),
         icon: Clock,
         permission: null,
     },
     {
-        title: t('nav.myLeaves'),
+        title: 'nav.myLeaves',
         href: route('dashboard.my-leaves.index'),
         icon: Calendar,
         permission: null,
     },
     {
-        title: t('nav.myPayroll'),
+        title: 'nav.myPayroll',
         href: route('dashboard.my-payroll.index'),
         icon: Calculator,
         permission: null,
     },
     {
-        title: t('nav.myLoans'),
+        title: 'nav.myLoans',
         href: route('dashboard.my-loans.index'),
         icon: CreditCard,
         permission: null,
@@ -53,7 +53,7 @@ const mainNavItems: NavItem[] = [
 
 const adminstrationNavItems: NavItem[] = [
     {
-        title: t('nav.companies'),
+        title: 'nav.companies',
         href: route('dashboard.companies.index'),
         icon: Building,
         permission: 'companies.view',
@@ -63,37 +63,37 @@ const adminstrationNavItems: NavItem[] = [
 
 const hrmNavItems: NavItem[] = [
     {
-        title: t('nav.employees'),
+        title: 'nav.employees',
         href: route('dashboard.employees.index'),
         icon: Users,
         permission: 'employees.view',
     },
     {
-        title: t('nav.departments'),
+        title: 'nav.departments',
         href: route('dashboard.departments.index'),
         icon: Building,
         permission: 'departments.view',
     },
     {
-        title: t('nav.attendance'),
+        title: 'nav.attendance',
         href: '/hrm/attendance',
         icon: Clock,
         permission: 'attendance.view',
     },
     {
-        title: t('nav.payroll'),
+        title: 'nav.payroll',
         href: '/hrm/payroll',
         icon: Calculator,
         permission: 'payroll.view',
     },
     {
-        title: t('nav.leaves'),
+        title: 'nav.leaves',
         href: '/hrm/leaves',
         icon: Calendar,
         permission: 'leaves.view',
     },
     {
-        title: t('nav.banks'),
+        title: 'nav.banks',
         href: '/hrm/banks',
         icon: CreditCard,
         permission: 'employees.view',
@@ -102,73 +102,73 @@ const hrmNavItems: NavItem[] = [
 
 const adminNavItems: NavItem[] = [
     {
-        title: t('nav.employmentTypes'),
+        title: 'nav.employmentTypes',
         href: route('dashboard.employment-types.index'),
         icon: Briefcase,
         permission: 'employment-types.view',
     },
     {
-        title: t('nav.jobTitles'),
+        title: 'nav.jobTitles',
         href: route('dashboard.job-titles.index'),
         icon: BadgeCheck,
         permission: 'job-titles.view',
     },
     {
-        title: t('nav.jobRequisitions'),
+        title: 'nav.jobRequisitions',
         href: route('dashboard.job-requisitions.index'),
         icon: Briefcase,
         permission: 'job-requisitions.view',
     },
     {
-        title: t('nav.jobPostings'),
+        title: 'nav.jobPostings',
         href: route('dashboard.job-postings.index'),
         icon: Briefcase,
         permission: 'job-postings.view',
     },
     {
-        title: t('nav.jobApplications'),
+        title: 'nav.jobApplications',
         href: route('dashboard.job-applications.index'),
         icon: Briefcase,
         permission: 'job-applications.view',
     },
     {
-        title: t('nav.approvalPolicies'),
+        title: 'nav.approvalPolicies',
         href: route('dashboard.approval-policies.index'),
         icon: CheckCheck,
         permission: 'approval-policies.edit',
     },
     {
-        title: t('nav.security'),
+        title: 'nav.security',
         href: '/admin/security',
         icon: Shield,
         permission: 'roles.view',
     },
     {
-        title: t('nav.roles'),
+        title: 'nav.roles',
         href: route('dashboard.roles.index'),
         icon: Crown,
         permission: 'roles.view',
     },
     {
-        title: t('nav.abilities'),
+        title: 'nav.abilities',
         href: route('dashboard.abilities.index'),
         icon: Zap,
         permission: 'abilities.view',
     },
     {
-        title: t('nav.paymentMethods', 'Payment Methods'),
+        title: 'nav.paymentMethods',
         href: route('dashboard.payment-methods.index'),
         icon: CreditCard,
         permission: 'payment-methods.view',
     },
     {
-        title: t('nav.admin'),
+        title: 'nav.admin',
         href: '/admin/users',
         icon: UserCheck,
         permission: 'users.view',
     },
     {
-        title: t('nav.settings'),
+        title: 'nav.settings',
         href: '/settings',
         icon: Settings,
         permission: 'settings.view',
@@ -177,25 +177,25 @@ const adminNavItems: NavItem[] = [
 
 export const NAV_ITEMS_DATA = [
     {
-        categoryName: t('nav.main'),
-        // categoryIcon: LayoutGrid,
+        categoryName: 'nav.main',
         categoryIcon: null,
+        // categoryIcon: LayoutGrid,
         items: mainNavItems,
     },
     {
-        categoryName: t('nav.administration'),
+        categoryName: 'nav.administration',
         categoryIcon: null,
         // categoryIcon: Building,
         items: adminstrationNavItems,
     },
     {
-        categoryName: t('nav.hrm'),
+        categoryName: 'nav.hrm',
         categoryIcon: null,
         // categoryIcon: Users,
         items: hrmNavItems,
     },
     {
-        categoryName: t('nav.admin'),
+        categoryName: 'nav.admin',
         categoryIcon: null,
         // categoryIcon: Shield,
         items: adminNavItems,

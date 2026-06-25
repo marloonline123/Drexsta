@@ -1,0 +1,27 @@
+<?php
+
+return [
+    'title' => 'Payment Methods',
+    'description' => 'Manage payment methods available for employees',
+    'addMethod' => 'Add Payment Method',
+    'create' => 'Create Payment Method',
+    'createDescription' => 'Add a new payment method for your organization',
+    'edit' => 'Edit Payment Method',
+    'editDescription' => 'Update payment method settings',
+    'deleteTitle' => 'Delete Payment Method',
+    'deleteDescription' => 'Are you sure you want to delete this payment method? This action cannot be undone.',
+    'deleteButton' => 'Delete Payment Method',
+    'deleteWarning' => 'This will permanently remove the payment method and cannot be undone.',
+    'list' => 'Payment Methods',
+    'listDescription' => 'All payment methods configured for your organization',
+    'noMethods' => 'No payment methods found',
+    'createFirst' => 'Create your first payment method',
+    'details' => 'Payment Method Details',
+    'detailsDescription' => 'Configure the payment method settings',
+    'namePlaceholder' => 'e.g., Bank Transfer, Credit Card',
+    'descriptionPlaceholder' => 'Describe how this payment method works...',
+    'active' => 'Active',
+    'activeDescription' => 'Inactive payment methods won\'\t be available for employees to select',
+    'saveButton' => 'Save Payment Method',
+    'viewDescription' => 'Payment method details and settings',
+];

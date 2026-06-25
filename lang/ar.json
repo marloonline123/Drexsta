@@ -17,6 +17,7 @@
     "status": "الحالة",
     "active": "نشط",
     "inactive": "غير نشط",
+    "all": "الكل",
     "name": "الاسم",
     "description": "الوصف",
     "createdAt": "تاريخ الإنشاء",
@@ -33,7 +34,11 @@
     "submit": "إرسال",
     "reset": "إعادة تعيين",
     "confirmDelete": "تأكيد الحذف",
-    "deleteWarning": "لا يمكن التراجع عن هذا الإجراء. هل أنت متأكد من رغبتك في المتابعة؟"
+    "deleteWarning": "لا يمكن التراجع عن هذا الإجراء. هل أنت متأكد من رغبتك في المتابعة؟",
+    "select": "اختر"
+  },
+  "flash": {
+    "toggleSuccess": "تم تحديث الحالة بنجاح."
   },
   "nav": {
     "main": "الرئيسي",
@@ -89,9 +94,6 @@
     "website": "الموقع الإلكتروني",
     "taxId": "الرقم الضريبي",
     "establishedDate": "تاريخ التأسيس",
-    "status": "الحالة",
-    "active": "نشط",
-    "inactive": "غير نشط",
     "totalCompanies": "إجمالي الشركات",
     "activeCompanies": "الشركات النشطة",
     "employeesCount": "الموظفين",
@@ -180,94 +182,145 @@
     "offline": "غير متصل",
     "lastSeen": "آخر ظهور"
   },
-  "admin": {
-    "employmentTypes": {
-      "title": "أنواع التوظيف",
-      "description": "إدارة أنواع التوظيف المختلفة وتكويناتها",
-      "addType": "إضافة نوع توظيف",
-      "typeName": "اسم النوع",
-      "hoursPerWeek": "ساعات في الأسبوع",
-      "benefits": "المزايا",
-      "included": "مشمولة",
-      "notIncluded": "غير مشمولة"
+  "employmentTypes": {
+    "title": "أنواع التوظيف",
+    "description": "إدارة أنواع التوظيف المختلفة وتكويناتها",
+    "addType": "إضافة نوع توظيف",
+    "typeName": "اسم النوع",
+    "hoursPerWeek": "ساعات في الأسبوع",
+    "benefits": "المزايا",
+    "included": "مشمولة",
+    "notIncluded": "غير مشمولة"
+  },
+  "jobTitles": {
+    "title": "المسميات الوظيفية",
+    "description": "إدارة المسميات الوظيفية وتكويناتها",
+    "addTitle": "إضافة مسمى وظيفي",
+    "titleName": "اسم المسمى",
+    "searchPlaceholder": "البحث بالعنوان أو الوصف",
+    "emptyDescription": "أنشئ مسمى وظيفي جديد للبدء.",
+    "totalJobTitles": "إجمالي المسميات الوظيفية",
+    "activeJobTitles": "المسميات الوظيفية النشطة",
+    "inactiveJobTitles": "المسميات الوظيفية غير النشطة",
+    "activePercentage": "نسبة النشاط",
+    "stats": {
+      "totalDescription": "جميع المسميات الوظيفية في النظام",
+      "activeDescription": "المسميات الوظيفية النشطة حالياً",
+      "inactiveDescription": "المسميات الوظيفية غير النشطة حالياً",
+      "percentageDescription": "من المسميات الوظيفية نشطة"
     },
-    "jobTitles": {
-      "title": "المسميات الوظيفية",
-      "description": "إدارة المسميات الوظيفية وتكويناتها",
-      "addTitle": "إضافة مسمى وظيفي",
-      "titleName": "اسم المسمى"
+    "headers": {
+      "title": "العنوان",
+      "status": "الحالة",
+      "date": "التاريخ",
+      "actions": "الإجراءات"
     },
-    "security": {
-      "title": "حراس الأمن",
-      "description": "إدارة أفراد الأمن ومراقبة حالتهم",
-      "addGuard": "إضافة حارس أمن",
-      "badgeNumber": "رقم الشارة",
-      "shift": "المناوبة",
-      "location": "الموقع",
-      "onDuty": "في الخدمة",
-      "offDuty": "خارج الخدمة",
-      "onBreak": "في استراحة"
+    "actions": {
+      "view": "عرض",
+      "edit": "تعديل",
+      "delete": "حذف"
     },
-    "roles": {
-      "title": "الأدوار والصلاحيات",
-      "description": "إدارة أدوار النظام وتعيين الصلاحيات للتحكم في الوصول",
-      "addRole": "إضافة دور",
-      "editRole": "تعديل الدور",
-      "deleteRole": "حذف الدور",
-      "viewRole": "عرض الدور",
-      "roleName": "اسم الدور",
-      "roleDescription": "الوصف",
-      "permissions": "الصلاحيات",
-      "assignPermissions": "تعيين الصلاحيات",
-      "selectPermissions": "اختيار الصلاحيات",
-      "noPermissions": "لم يتم تعيين صلاحيات",
-      "confirmDelete": "هل أنت متأكد من حذف هذا الدور؟",
-      "deleteWarning": "لا يمكن التراجع عن هذا الإجراء وسيؤثر على جميع المستخدمين الذين يملكون هذا الدور.",
-      "permissionCategories": {
-        "users": "إدارة المستخدمين",
-        "roles": "إدارة الأدوار",
-        "companies": "إدارة الشركات",
-        "employees": "إدارة الموظفين",
-        "attendance": "إدارة الحضور",
-        "payroll": "إدارة كشوف المرتبات",
-        "reports": "التقارير والتحليلات",
-        "leaves": "إدارة الإجازات",
-        "abilities": "إدارة القدرات",
-        "holidays": "إدارة العطلات",
-        "job-titles": "إدارة المسميات الوظيفية",
-        "job-requisitions": "إدارة طلبات التوظيف",
-        "job-postings": "إدارة إعلانات الوظائف",
-        "job-applications": "إدارة طلبات التوظيف",
-        "employment-types": "إدارة أنواع التوظيف",
-        "approval-policies": "إدارة سياسات الموافقة",
-        "leave-types": "إدارة أنواع الإجازات",
-        "departments": "إدارة الأقسام",
-        "settings": "إعدادات النظام"
+    "empty": {
+      "title": "لا توجد مسميات وظيفية",
+      "description": "أنشئ أول مسمى وظيفي للبدء"
+    },
+    "modals": {
+      "create": {
+        "title": "إنشاء مسمى وظيفي",
+        "description": "أضف مسمى وظيفي جديد لتصنيف مناصب موظفيك."
       },
-      "permissionActions": {
-        "view": "عرض",
-        "create": "إنشاء",
-        "edit": "تعديل",
-        "delete": "حذف",
-        "manage": "إدارة",
-        "assign-roles": "تعيين الأدوار",
-        "assign-abilities": "تعيين القدرات",
-        "assign-job-titles": "تعيين المسميات الوظيفية",
-        "assign-departments": "تعيين الأقسام"
+      "edit": {
+        "title": "تعديل المسمى الوظيفي",
+        "description": "تحديث تفاصيل المسمى الوظيفي."
+      },
+      "form": {
+        "labels": {
+          "title": "اسم المسمى الوظيفي",
+          "description": "الوصف",
+          "status": "حالة المسمى الوظيفي"
+        },
+        "descriptions": {
+          "status": "تمكين أو تعطيل هذا المسمى الوظيفي"
+        },
+        "actions": {
+          "cancel": "إلغاء",
+          "saving": "جارٍ الحفظ...",
+          "update": "تحديث المسمى الوظيفي",
+          "create": "إنشاء مسمى وظيفي"
+        }
       }
-    },
-    "users": {
-      "title": "إدارة المسؤولين",
-      "description": "إدارة مسؤولي النظام وصلاحيات الوصول",
-      "addAdmin": "إضافة مستخدم مسؤول",
-      "role": "الدور",
-      "permissions": "الصلاحيات",
-      "twoFactor": "تفعيل المصادقة الثنائية",
-      "superAdmin": "مسؤول عام",
-      "hrAdmin": "مسؤول الموارد البشرية",
-      "financeAdmin": "مسؤول المالية",
-      "itAdmin": "مسؤول تقنية المعلومات"
     }
+  },
+  "security": {
+    "title": "حراس الأمن",
+    "description": "إدارة أفراد الأمن ومراقبة حالتهم",
+    "addGuard": "إضافة حارس أمن",
+    "badgeNumber": "رقم الشارة",
+    "shift": "المناوبة",
+    "location": "الموقع",
+    "onDuty": "في الخدمة",
+    "offDuty": "خارج الخدمة",
+    "onBreak": "في استراحة"
+  },
+  "roles": {
+    "title": "الأدوار والصلاحيات",
+    "description": "إدارة أدوار النظام وتعيين الصلاحيات للتحكم في الوصول",
+    "addRole": "إضافة دور",
+    "editRole": "تعديل الدور",
+    "deleteRole": "حذف الدور",
+    "viewRole": "عرض الدور",
+    "roleName": "اسم الدور",
+    "roleDescription": "الوصف",
+    "permissions": "الصلاحيات",
+    "assignPermissions": "تعيين الصلاحيات",
+    "selectPermissions": "اختيار الصلاحيات",
+    "noPermissions": "لم يتم تعيين صلاحيات",
+    "confirmDelete": "هل أنت متأكد من حذف هذا الدور؟",
+    "deleteWarning": "لا يمكن التراجع عن هذا الإجراء وسيؤثر على جميع المستخدمين الذين يملكون هذا الدور.",
+    "permissionCategories": {
+      "users": "إدارة المستخدمين",
+      "roles": "إدارة الأدوار",
+      "companies": "إدارة الشركات",
+      "employees": "إدارة الموظفين",
+      "attendance": "إدارة الحضور",
+      "payroll": "إدارة كشوف المرتبات",
+      "reports": "التقارير والتحليلات",
+      "leaves": "إدارة الإجازات",
+      "abilities": "إدارة القدرات",
+      "holidays": "إدارة العطلات",
+      "job-titles": "إدارة المسميات الوظيفية",
+      "job-requisitions": "إدارة طلبات التوظيف",
+      "job-postings": "إدارة إعلانات الوظائف",
+      "job-applications": "إدارة طلبات التوظيف",
+      "employment-types": "إدارة أنواع التوظيف",
+      "approval-policies": "إدارة سياسات الموافقة",
+      "leave-types": "إدارة أنواع الإجازات",
+      "departments": "إدارة الأقسام",
+      "settings": "إعدادات النظام"
+    },
+    "permissionActions": {
+      "view": "عرض",
+      "create": "إنشاء",
+      "edit": "تعديل",
+      "delete": "حذف",
+      "manage": "إدارة",
+      "assign-roles": "تعيين الأدوار",
+      "assign-abilities": "تعيين القدرات",
+      "assign-job-titles": "تعيين المسميات الوظيفية",
+      "assign-departments": "تعيين الأقسام"
+    }
+  },
+  "users": {
+    "title": "إدارة المسؤولين",
+    "description": "إدارة مسؤولي النظام وصلاحيات الوصول",
+    "addAdmin": "إضافة مستخدم مسؤول",
+    "role": "الدور",
+    "permissions": "الصلاحيات",
+    "twoFactor": "تفعيل المصادقة الثنائية",
+    "superAdmin": "مسؤول عام",
+    "hrAdmin": "مسؤول الموارد البشرية",
+    "financeAdmin": "مسؤول المالية",
+    "itAdmin": "مسؤول تقنية المعلومات"
   },
   "landing": {
     "heroTitle": "إدارة موارد بشرية حديثة للفرق النامية",

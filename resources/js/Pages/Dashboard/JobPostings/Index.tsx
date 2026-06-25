@@ -11,8 +11,8 @@ import AppLayout from '@/Layouts/AppLayout';
 import { type BreadcrumbItem, Auth } from '@/Types';
 import { router } from '@inertiajs/core';
 import { useLanguage } from '@/Hooks/use-language';
+import { usePermissions } from '@/hooks/use-permissions';
 import { JobPosting } from '@/Types/job-postings';
-import { hasPermissionTo } from '@/Lib/permissions';
 import { cn } from '@/Lib/utils';
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -32,6 +32,7 @@ interface JobPostingsIndexProps {
 
 export default function JobPostingsIndex({ postings }: JobPostingsIndexProps) {
   const { t } = useLanguage();
+    const { can } = usePermissions();
   const { user } = usePage().props.auth as Auth;
   const postingsData = postings.data;
 
@@ -92,7 +93,7 @@ export default function JobPostingsIndex({ postings }: JobPostingsIndexProps) {
             </p>
           </div>
 
-          {hasPermissionTo(user, 'job-postings.create') && (
+          {can('job-postings.create') && (
             <Link href={route('dashboard.job-postings.create')} className={buttonVariants({ variant: 'default' })}>
               <Plus className="mr-2 h-4 w-4" />
               {t('jobPostings.addPosting')}
@@ -143,7 +144,7 @@ export default function JobPostingsIndex({ postings }: JobPostingsIndexProps) {
                       <TableCell>{new Date(posting.created_at).toLocaleDateString()}</TableCell>
                       <TableCell className="text-right">
                         <div className="flex justify-end gap-2">
-                          {posting.status === 'draft' && hasPermissionTo(user, 'job-postings.edit') && (
+                          {posting.status === 'draft' && can('job-postings.edit') && (
                             <Button
                               variant="outline"
                               size="sm"
@@ -153,7 +154,7 @@ export default function JobPostingsIndex({ postings }: JobPostingsIndexProps) {
                               <Play className="h-4 w-4" />
                             </Button>
                           )}
-                          {posting.status === 'open' && hasPermissionTo(user, 'job-postings.edit') && (
+                          {posting.status === 'open' && can('job-postings.edit') && (
                             <Button
                               variant="outline"
                               size="sm"
@@ -166,12 +167,12 @@ export default function JobPostingsIndex({ postings }: JobPostingsIndexProps) {
                           <Link href={route('dashboard.job-postings.show', posting.slug)} className={cn(buttonVariants({variant: 'outline', size: 'sm'}))}>
                               <Eye className="h-4 w-4" />
                           </Link>
-                          {hasPermissionTo(user, 'job-postings.edit') && (
+                          {can('job-postings.edit') && (
                             <Link href={route('dashboard.job-postings.edit', posting.slug)} className={cn(buttonVariants({variant: 'outline', size: 'sm'}))}>
                               <Edit className="h-4 w-4" />
                             </Link>
                           )}
-                          {hasPermissionTo(user, 'job-postings.delete') && (
+                          {can('job-postings.delete') && (
                             <Button
                               variant="outline"
                               size="sm"
@@ -193,7 +194,7 @@ export default function JobPostingsIndex({ postings }: JobPostingsIndexProps) {
                 <p className="text-muted-foreground mb-4">
                   {t('jobPostings.createFirst')}
                 </p>
-                {hasPermissionTo(user, 'job-postings.create') && (
+                {can('job-postings.create') && (
                     <Link href={route('dashboard.job-postings.create')} className={buttonVariants({ variant: 'default' })}>
                       <Plus className="mr-2 h-4 w-4" />
                       {t('jobPostings.addPosting')}

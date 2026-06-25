@@ -1,6 +1,7 @@
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/Components/Ui/dialog';
+import useTranslation from '@/Hooks/use-translation';
 import { JobTitle } from '@/Types/job-titles';
 import JobTitleForm from './JobTitleForm';
+import SharedModal from '../Shared/SharedModal';
 
 interface EditJobTitleModalProps {
     jobTitle: JobTitle;
@@ -10,24 +11,21 @@ interface EditJobTitleModalProps {
 }
 
 export default function EditJobTitleModal({ jobTitle, open, onOpenChange, onSuccess }: EditJobTitleModalProps) {
+    const { translate } = useTranslation();
     return (
-        <Dialog open={open} onOpenChange={onOpenChange}>
-            <DialogContent className="sm:max-w-[500px]">
-                <DialogHeader>
-                    <DialogTitle>Edit Job Title</DialogTitle>
-                    <DialogDescription>
-                        Update the job title details.
-                    </DialogDescription>
-                </DialogHeader>
-
-                {/* Job Title Form */}
+        <SharedModal
+            title={translate('jobTitles.modals.edit.title')}
+            description={translate('jobTitles.modals.edit.description')}
+            form={
                 <JobTitleForm
                     jobTitle={jobTitle}
-                    action={route('dashboard.job-titles.update', jobTitle.id)}
-                    method="put"
+                    action={route('dashboard.job-titles.update')}
+                    method="post"
                     onSuccess={onSuccess}
                 />
-            </DialogContent>
-        </Dialog>
+            }
+            open={open}
+            onOpenChange={onOpenChange}
+        />
     );
 }

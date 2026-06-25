@@ -4,7 +4,7 @@ export type JobTitle = {
     id: number;
     title: string;
     slug: string;
-    description?: string;
+    description: string;
     is_active: boolean;
     company?: Company;
     created_at: string;

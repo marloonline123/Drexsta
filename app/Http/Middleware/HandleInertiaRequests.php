@@ -6,6 +6,7 @@ use App\Http\Resources\CompanyResource;
 use App\Http\Resources\UserResource;
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Inertia\Middleware;
 use Tighten\Ziggy\Ziggy;
 
@@ -59,18 +60,19 @@ class HandleInertiaRequests extends Middleware
             ],
             'sidebarCompanies' => fn(): array => $request->user() ? CompanyResource::collection($request->user()->companies()->with('users')->get())->resolve() : [],
             'sidebarOpen' => !$request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
-            'translation' => fn(): array => $this->getTranslations($request),
+            'translations' => fn(): array => $this->getTranslations($request),
+            'locale' => config('app.locale'),
         ];
     }
 
     /**
-     * Load translations from lang/{locale}.json file.
+     * Load translations from lang/{locale}/ directory PHP files.
      */
     private function getTranslations(Request $request): array
     {
         // Priority: cookie > session > Accept-Language header > default 'en'
-        $locale = $request->cookie('language')
-            ?? $request->session()->get('language')
+        $locale = config('app.locale')
+            ?? $request->session()->get('locale')
             ?? (in_array(substr($request->header('Accept-Language', 'en'), 0, 2), ['en', 'ar'], true)
                 ? substr($request->header('Accept-Language', 'en'), 0, 2)
                 : 'en');
@@ -81,12 +83,36 @@ class HandleInertiaRequests extends Middleware
             $locale = 'en';
         }
 
-        $path = resource_path("lang/{$locale}.json");
+        $langPath = dirname(__DIR__, 3) . "/lang/{$locale}";
 
-        if (!file_exists($path)) {
+        Log::info("Loading translations from: {$langPath}");
+
+        if (!is_dir($langPath)) {
             return [];
         }
 
-        return json_decode(file_get_contents($path), true) ?? [];
+        $translations = [];
+
+        // Get all PHP files in the language directory
+        $phpFiles = glob($langPath . '/*.php');
+
+        foreach ($phpFiles as $file) {
+            // Skip files that start with dot (like .gitignore)
+            if (basename($file)[0] === '.') {
+                continue;
+            }
+            
+            // Extract the filename without extension to use as key
+            $filename = basename($file, '.php');
+            
+            // Load the translation array from the PHP file
+            $translationArray = require $file;
+            
+            // Merge the translation array into our main translations array
+            // This preserves the nested structure expected by the frontend
+            $translations[$filename] = $translationArray;
+        }
+
+        return $translations;
     }
 }

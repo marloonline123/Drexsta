@@ -30,9 +30,3 @@ export const getPermissionCategoryIcon = (category: string) => {
     const Icon = icons[category as keyof typeof icons] || Shield;
     return <Icon className="h-4 w-4" />;
 };
-
-export const hasPermissionTo = (user: User, permission: string): boolean => {
-    return user.permissions.find(p => p.name === permission)
-    // || user.roles.find(r => r.name === 'Super Admin') 
-    ? true : false;
-}

@@ -1,6 +1,7 @@
 import React from 'react';
 import { PaginatedData } from '@/Types/global';
 import { router } from '@inertiajs/react';
+import { buttonVariants } from '../Ui/button';
 
 type PageLink = {
     url: string | null;
@@ -37,7 +38,7 @@ export default function Pagination<T>({ meta }: PaginationProps<T>) {
     };
 
     return (
-        <nav className="flex items-center justify-between bg-white p-3 rounded-md shadow-sm">
+        <nav className="flex items-center justify-between bg-card rounded-md shadow-sm mt-2 p-3">
             
 
             <ul className="flex items-center space-x-1 overflow-auto px-2">
@@ -50,7 +51,8 @@ export default function Pagination<T>({ meta }: PaginationProps<T>) {
                             <button
                                 onClick={() => { if (link.url) navigate(link.url); }}
                                 disabled={!link.url}
-                                className={`min-w-[36px] h-8 px-2 rounded-md text-sm flex items-center justify-center border ${link.active ? 'bg-primary text-white border-transparent' : 'bg-white hover:bg-gray-50'}`}
+                                // className={`min-w-[36px] h-8 px-2 rounded-md text-sm flex items-center justify-center border ${link.active ? 'bg-primary text-white border-transparent' : 'bg-white hover:bg-gray-50'}`}
+                                className={buttonVariants()}
                                 aria-current={link.active ? 'page' : undefined}
                             >
                                 {isNav ? label : (Number.isNaN(pageNumber) ? label : pageNumber)}

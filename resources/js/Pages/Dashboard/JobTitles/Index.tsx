@@ -1,40 +1,41 @@
-import { Head, usePage } from '@inertiajs/react';
+import { Head } from '@inertiajs/react';
 import AppLayout from '@/Layouts/AppLayout';
-import { Auth, type BreadcrumbItem } from '@/Types';
+import { type BreadcrumbItem } from '@/Types';
 import { Button } from '@/Components/Ui/button';
 import { JobTitle } from '@/Types/job-titles';
 import { PaginatedData } from '@/Types/global';
-import JobTitlesStats from '@/Components/JobTitles/JobTitlesStats';
 import JobTitlesList from '@/Components/JobTitles/JobTitlesList';
 import CreateJobTitleModal from '@/Components/JobTitles/CreateJobTitleModal';
 import { Plus, BadgeCheck } from 'lucide-react';
 import Filter from '@/Components/Shared/Filter';
-import Pagination from '@/Components/Shared/Pagination';
 import { useState } from 'react';
 import EmptyResource from '@/Components/Shared/EmptyResource';
-import { hasPermissionTo } from '@/Lib/permissions';
+import PageHeader from '@/Components/Shared/PageHeader';
+import ResourceList from '@/Components/Shared/ResourceList';
+import useTranslation from '@/Hooks/use-translation';
+import usePermissions from '@/Hooks/use-permissions';
 
-const breadcrumbs: BreadcrumbItem[] = [
-    {
-        title: 'Dashboard',
-        href: route('dashboard.index'),
-    },
-    {
-        title: 'Job Titles',
-        href: route('dashboard.job-titles.index'),
-    },
-];
 
 interface JobTitlesIndexProps {
     jobTitles: PaginatedData<JobTitle>;
 }
 
 export default function JobTitlesIndex({ jobTitles }: JobTitlesIndexProps) {
-    const { user } = usePage().props.auth as Auth;
-    const jobTitlesData = jobTitles?.data || [];
+    const jobTitlesData = jobTitles?.data ?? [];
     const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+    const { translate } = useTranslation(); 
+    const { can } = usePermissions();   
 
-    console.log('Job Titles:', jobTitles);
+    const breadcrumbs: BreadcrumbItem[] = [
+        {
+            title: translate('nav.dashboard'),
+            href: route('dashboard.index'),
+        },
+        {
+            title: translate('jobTitles.title'),
+            href: route('dashboard.job-titles.index'),
+        },
+    ];
     
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
@@ -42,63 +43,58 @@ export default function JobTitlesIndex({ jobTitles }: JobTitlesIndexProps) {
 
             <div className="flex-1 space-y-6 p-6">
                 {/* Header */}
-                <div className="flex items-center justify-between">
-                    <div>
+                <PageHeader
+                    title={
                         <h1 className="text-3xl font-bold tracking-tight flex items-center gap-2">
                             <BadgeCheck className="h-8 w-8" />
-                            Job Titles
+                            {translate('jobTitles.title')}
                         </h1>
-                        <p className="text-muted-foreground">
-                            Manage job title categories for your organization
-                        </p>
-                    </div>
-
-                    {hasPermissionTo(user, 'job-titles.create') && (
-                        <Button onClick={() => setIsCreateModalOpen(true)}>
-                            <Plus className="mr-2 h-4 w-4" />
-                            Add Job Title
-                        </Button>
-                    )}
-                </div>
-
-                {/* Overview Cards */}
-                {jobTitles && (
-                    <JobTitlesStats jobTitles={jobTitles} />
-                )}
+                    }
+                    description={translate('jobTitles.description')}
+                    action={
+                        can('job-titles.create') && (
+                            <Button onClick={() => setIsCreateModalOpen(true)}>
+                                <Plus className="mr-2 h-4 w-4" />
+                                {translate('jobTitles.addTitle')}
+                            </Button>
+                        )
+                    }
+                
+                />
 
                 {/* Filters and Search */}
                 <Filter
                     routeName='dashboard.job-titles.index'
                     fields={{
-                        search: { type: 'text', placeholder: 'Search by title or description' },
+                        search: { type: 'text', placeholder: translate('jobTitles.searchPlaceholder') },
                         status: {
                             type: 'select', 
-                            placeholder: 'Select Status', 
+                            placeholder: translate('main.select'), 
                             options: [
-                                { value: 'all', label: 'All' },
-                                { value: 'active', label: 'Active' },
-                                { value: 'inactive', label: 'Inactive' },
+                                { value: 'all', label: translate('main.all') },
+                                { value: 'active', label: translate('main.active') },
+                                { value: 'inactive', label: translate('main.inactive') },
                             ]
                         },
                     }}
                 />
 
                 {/* Job Titles List */}
-                {jobTitlesData.length === 0 ? (
-                    <EmptyResource 
-                        icon={BadgeCheck}
-                        title="No Job Titles Found"
-                        description="Create a new job title to get started."
-                    />
-                ) : jobTitles ? (
-                    <JobTitlesList 
-                        jobTitles={jobTitlesData} 
-                    />
-                ) : null}
-
-                {/* Pagination */}
-                <Pagination
-                    meta={jobTitles.meta}
+                <ResourceList
+                    dataLenght={jobTitlesData.length}
+                    filled={
+                        <JobTitlesList 
+                            jobTitles={jobTitlesData} 
+                        />
+                    }
+                    empty={
+                        <EmptyResource 
+                            icon={BadgeCheck}
+                            title={translate('common.noData')}
+                            description={translate('jobTitles.emptyDescription')}
+                        />
+                    }
+                    paginationData={jobTitles?.meta}
                 />
             </div>
 

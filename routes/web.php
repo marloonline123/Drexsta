@@ -25,6 +25,10 @@ use App\Http\Controllers\Profile\PasswordController;
 use App\Http\Controllers\Profile\ProfileController;
 use App\Http\Controllers\SelectCompanyController;
 use App\Http\Controllers\Public\PublicPagesController;
+use App\Http\Controllers\SetLocaleController;
+use App\Http\Controllers\ToggleIsActiveController;
+use App\Http\Middleware\SetLocale;
+use App\Models\JobTitle;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -50,6 +54,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::apiResource('employment-types', EmploymentTypeController::class);
 
         // Job Titles
+        Route::patch('job-titles/{jobTitle}/toggle-status', ToggleIsActiveController::class)
+            ->defaults('resource_model', JobTitle::class)
+            ->middleware('throttle:regular')
+            ->name('job-titles.toggle-status');
         Route::apiResource('job-titles', JobTitleController::class);
 
         // Abilities
@@ -159,6 +167,8 @@ Route::post('jobs/{company}/{jobPosting}/apply', [JobPostingController::class, '
 Route::get('jobs/{company}/{jobPosting}/success/{applicationNumber}', [JobPostingController::class, 'applicationSuccess'])->name('jobs.apply.success');
 Route::get('applications/{company}/{token}/edit', [JobPostingController::class, 'editApplication'])->name('applications.edit');
 Route::put('applications/{company}/{token}', [JobPostingController::class, 'updateApplication'])->name('applications.update');
+
+Route::post('/locale/{locale}', SetLocaleController::class)->middleware('throttle:regular')->withoutMiddleware(SetLocale::class)->name('locale.set');
 
 require __DIR__ . '/settings.php';
 require __DIR__ . '/auth.php';

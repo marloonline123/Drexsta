@@ -15,7 +15,7 @@ i18n
         debug: false,
         interpolation: {
             escapeValue: false,
-        },ng
+        },
         detection: {
             order: ['localStorage', 'cookie', 'navigator'],
             caches: ['localStorage', 'cookie'],

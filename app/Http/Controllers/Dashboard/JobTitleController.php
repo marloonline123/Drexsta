@@ -18,6 +18,11 @@ class JobTitleController extends BaseController
     public function index(Request $request)
     {
         $this->authorize('viewAny', JobTitle::class);
+        $request->validate([
+            'search' => 'nullable|string|max:255',
+            'status' => 'nullable|in:active,inactive',
+        ]);
+
         $user = Auth::user();
         $company = $user->activeCompany;
 

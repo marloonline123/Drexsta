@@ -35,11 +35,16 @@ export interface NavItemData {
 
 export type NavItemsData = NavItemData[];
 
-export interface SharedData {
+export interface PageProps {
     name: string;
     quote: { message: string; author: string };
     auth: Auth;
     ziggy: Config & { location: string };
     sidebarOpen: boolean;
+    translations: Record<string, string>;
+    flash: {
+        success?: string;
+        error?: string;
+    }
     [key: string]: unknown;
 }
