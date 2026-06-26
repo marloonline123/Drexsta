@@ -12,8 +12,8 @@ export default function CreateJobTitleModal({ open, onOpenChange, onSuccess }: C
     const { translate } = useTranslation();
     return (
         <SharedModal
-            title={translate('jobTitles.modals.create.title')}
-            description={translate('jobTitles.modals.create.description')}
+            title={translate('job_titles.modals.create.title')}
+            description={translate('job_titles.modals.create.description')}
             form={
                 <JobTitleForm
                     action={route('dashboard.job-titles.store')}

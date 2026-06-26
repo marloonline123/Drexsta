@@ -14,7 +14,7 @@ export default function EditJobTitleModal({ jobTitle, open, onOpenChange, onSucc
     const { translate } = useTranslation();
     return (
         <SharedModal
-            title={translate('jobTitles.modals.edit.title')}
+            title={translate('job_titles.modals.edit.title')}
             description={translate('jobTitles.modals.edit.description')}
             form={
                 <JobTitleForm

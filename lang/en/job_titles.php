@@ -17,17 +17,7 @@ return [
         'inactiveDescription' => 'Currently inactive job titles',
         'percentageDescription' => 'Of job titles are active',
     ],
-    'headers' => [
-        'title' => 'Title',
-        'status' => 'Status',
-        'date' => 'Date',
-        'actions' => 'Actions',
-    ],
-    'actions' => [
-        'view' => 'View',
-        'edit' => 'Edit',
-        'delete' => 'Delete',
-    ],
+    
     'empty' => [
         'title' => 'No Job Titles',
         'description' => 'Create your first job title to get started',
@@ -51,9 +41,6 @@ return [
         'description' => 'Description',
         'company' => 'Company',
     ],
-    'empty' => [
-        'description' => 'No description provided',
-    ],
     'form' => [
         'labels' => [
             'title' => 'Job Title Name',
@@ -62,6 +49,10 @@ return [
         ],
         'descriptions' => [
             'status' => 'Enable or disable this job title',
+        ],
+        'placeholder' => [
+            'title' => 'ادخل المسمى الوظيفي',
+            'description' => 'ادخل وصف المسمى الوظيفي' 
         ],
         'actions' => [
             'cancel' => 'Cancel',

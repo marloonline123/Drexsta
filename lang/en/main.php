@@ -1,7 +1,6 @@
 <?php
 
 return [
-    'actions' => 'Actions',
     'create' => 'Create',
     'edit' => 'Edit',
     'delete' => 'Delete',
@@ -37,4 +36,16 @@ return [
     'confirmDelete' => 'Confirm Delete',
     'deleteWarning' => 'This action cannot be undone. Are you sure you want to proceed?',
     'select' => 'Select',
+    'actions' => 'Actions',
+    'headers' => [
+        'title' => 'Title',
+        'status' => 'Status',
+        'date' => 'Date',
+        'actions' => 'Actions',
+    ],
+    'actions.options' => [
+        'view' => 'View',
+        'edit' => 'Edit',
+        'delete' => 'Delete',
+    ],
 ];

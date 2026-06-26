@@ -32,7 +32,7 @@ export default function JobTitlesIndex({ jobTitles }: JobTitlesIndexProps) {
             href: route('dashboard.index'),
         },
         {
-            title: translate('jobTitles.title'),
+            title: translate('job_titles.title'),
             href: route('dashboard.job-titles.index'),
         },
     ];
@@ -47,15 +47,15 @@ export default function JobTitlesIndex({ jobTitles }: JobTitlesIndexProps) {
                     title={
                         <h1 className="text-3xl font-bold tracking-tight flex items-center gap-2">
                             <BadgeCheck className="h-8 w-8" />
-                            {translate('jobTitles.title')}
+                            {translate('job_titles.title')}
                         </h1>
                     }
-                    description={translate('jobTitles.description')}
+                    description={translate('job_titles.description')}
                     action={
                         can('job-titles.create') && (
                             <Button onClick={() => setIsCreateModalOpen(true)}>
                                 <Plus className="mr-2 h-4 w-4" />
-                                {translate('jobTitles.addTitle')}
+                                {translate('job_titles.addTitle')}
                             </Button>
                         )
                     }
@@ -66,7 +66,7 @@ export default function JobTitlesIndex({ jobTitles }: JobTitlesIndexProps) {
                 <Filter
                     routeName='dashboard.job-titles.index'
                     fields={{
-                        search: { type: 'text', placeholder: translate('jobTitles.searchPlaceholder') },
+                        search: { type: 'text', placeholder: translate('job_titles.searchPlaceholder') },
                         status: {
                             type: 'select', 
                             placeholder: translate('main.select'), 
@@ -91,7 +91,7 @@ export default function JobTitlesIndex({ jobTitles }: JobTitlesIndexProps) {
                         <EmptyResource 
                             icon={BadgeCheck}
                             title={translate('common.noData')}
-                            description={translate('jobTitles.emptyDescription')}
+                            description={translate('job_titles.emptyDescription')}
                         />
                     }
                     paginationData={jobTitles?.meta}

@@ -24,19 +24,19 @@ export default function JobTitleForm({ action, jobTitle, method = 'post', onSucc
                 <div className="space-y-6">
                     <div className="space-y-2">
                         <Label htmlFor="title">
-                            {translate('jobTitles.form.labels.title')} <span className="text-destructive">*</span>
+                            {translate('job_titles.form.labels.title')} <span className="text-destructive">*</span>
                         </Label>
-                        <Input id="title" name="title" placeholder="Enter job title name" required autoFocus defaultValue={jobTitle?.title || ''} />
+                        <Input id="title" name="title" placeholder={translate('job_titles.form.placeholder.title')} required autoFocus defaultValue={jobTitle?.title || ''} />
                         <InputError message={errors.title} />
                     </div>
 
                     {/* Description */}
                     <div className="space-y-2">
-                        <Label htmlFor="description">{translate('jobTitles.form.labels.description')}</Label>
+                        <Label htmlFor="description">{translate('job_titles.form.labels.description')}</Label>
                         <Textarea
                             id="description"
                             name="description"
-                            placeholder="Enter job title description"
+                            placeholder={translate('job_titles.form.placeholder.description')}
                             rows={4}
                             defaultValue={jobTitle?.description || ''}
                         />
@@ -44,8 +44,8 @@ export default function JobTitleForm({ action, jobTitle, method = 'post', onSucc
                     </div>
                     <div className="flex items-center justify-between">
                         <div className="space-y-0.5">
-                            <Label>{translate('jobTitles.form.labels.status')}</Label>
-                            <p className="text-sm text-muted-foreground">{translate('jobTitles.form.descriptions.status')}</p>
+                            <Label>{translate('job_titles.form.labels.status')}</Label>
+                            <p className="text-sm text-muted-foreground">{translate('job_titles.form.descriptions.status')}</p>
                         </div>
                         <Switch name="is_active" defaultChecked={jobTitle?.is_active ?? true} />
                     </div>
@@ -53,11 +53,11 @@ export default function JobTitleForm({ action, jobTitle, method = 'post', onSucc
                     {/* Form Actions */}
                     <div className="flex items-center justify-end gap-4 border-t pt-6">
                         <Link href="/dashboard/job-titles" className={buttonVariants({ variant: 'outline' })}>
-                            {translate('jobTitles.form.actions.cancel')}
+                            {translate('job_titles.form.actions.cancel')}
                         </Link>
                         <Button type="submit" disabled={processing}>
                             <Save className="mr-2 h-4 w-4" />
-                            {processing ? translate('jobTitles.form.actions.saving') : jobTitle ? translate('jobTitles.form.actions.update') : translate('jobTitles.form.actions.create')}
+                            {processing ? translate('job_titles.form.actions.saving') : jobTitle ? translate('job_titles.form.actions.update') : translate('job_titles.form.actions.create')}
                         </Button>
                     </div>
                 </div>

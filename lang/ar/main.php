@@ -1,7 +1,6 @@
 <?php
 
 return [
-    'actions' => 'الإجراءات',
     'create' => 'إنشاء',
     'edit' => 'تعديل',
     'delete' => 'حذف',
@@ -37,4 +36,16 @@ return [
     'confirmDelete' => 'تأكيد الحذف',
     'deleteWarning' => 'لا يمكن التراجع عن هذا الإجراء. هل أنت متأكد من رغبتك في المتابعة؟',
     'select' => 'اختر',
+    'actions' => 'الإجراءات',
+    'headers' => [
+        'title' => 'العنوان',
+        'status' => 'الحالة',
+        'date' => 'التاريخ',
+        'actions' => 'الإجراءات',
+    ],
+    'actions.options' => [
+        'view' => 'عرض',
+        'edit' => 'تعديل',
+        'delete' => 'حذف',
+    ],
 ];

@@ -33,19 +33,19 @@ export default function ViewJobTitleModal({ jobTitle, open, onOpenChange }: View
                     <CardContent className="p-0">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div className="space-y-2">
-                                <Label>{translate('jobTitles.fields.slug')}</Label>
+                                <Label>{translate('job_titles.fields.slug')}</Label>
                                 <p className="text-sm">{jobTitle.slug}</p>
                             </div>
                             
                             <div className="space-y-2">
-                                <Label>{translate('jobTitles.fields.createdAt')}</Label>
+                                <Label>{translate('job_titles.fields.createdAt')}</Label>
                                 <p className="text-sm">
                                     {jobTitle.created_at ? format(new Date(jobTitle.created_at), 'PPP') : 'N/A'}
                                 </p>
                             </div>
                             
                             <div className="space-y-2 md:col-span-2">
-                                <Label>{translate('jobTitles.fields.description')}</Label>
+                                <Label>{translate('job_titles.fields.description')}</Label>
                                 <p className="text-sm">
                                     {jobTitle.description || translate('jobTitles.empty.description')}
                                 </p>
@@ -53,7 +53,7 @@ export default function ViewJobTitleModal({ jobTitle, open, onOpenChange }: View
                             
                             {jobTitle.company && (
                                 <div className="space-y-2 md:col-span-2">
-                                    <Label>{translate('jobTitles.fields.company')}</Label>
+                                    <Label>{translate('job_titles.fields.company')}</Label>
                                     <p className="text-sm">{jobTitle.company.name}</p>
                                 </div>
                             )}

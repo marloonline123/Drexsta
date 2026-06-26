@@ -27,7 +27,7 @@ export default function JobTitlesList({ jobTitles }: JobTitlesListProps) {
 
     const columns = [
         {
-            header: translate('jobTitles.headers.title'),
+            header: translate('main.headers.title'),
             accessorKey: 'title' as keyof JobTitle,
             cell: (jobTitle: JobTitle) => (
                 <div className="flex items-center gap-2">
@@ -42,14 +42,14 @@ export default function JobTitlesList({ jobTitles }: JobTitlesListProps) {
             ),
         },
         {
-            header: translate('jobTitles.headers.status'),
+            header: translate('main.headers.status'),
             cell: (jobTitle: JobTitle) => (
                 <IsActiveTogglar route={route('dashboard.job-titles.toggle-status', jobTitle)} children={<StatusBadge status={!!jobTitle.is_active} />} />
             ),
         },
-        { header: translate('jobTitles.headers.date'), accessorKey: 'created_at' as keyof JobTitle },
+        { header: translate('main.headers.date'), accessorKey: 'created_at' as keyof JobTitle },
         {
-            header: translate('jobTitles.headers.actions'),
+            header: translate('main.headers.actions'),
             className: 'text-center',
             cell: (jobTitle: JobTitle) => (
                 <DropdownMenu>
