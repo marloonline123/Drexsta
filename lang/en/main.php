@@ -43,7 +43,7 @@ return [
         'date' => 'Date',
         'actions' => 'Actions',
     ],
-    'actions.options' => [
+    'action_options' => [
         'view' => 'View',
         'edit' => 'Edit',
         'delete' => 'Delete',

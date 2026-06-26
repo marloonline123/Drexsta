@@ -1,4 +1,4 @@
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/Components/Ui/dialog';
+import SharedModal from '@/Components/Shared/SharedModal';
 import { JobTitle } from '@/Types/job-titles';
 import { Badge } from '@/Components/Ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/Components/Ui/card';
@@ -15,18 +15,18 @@ interface ViewJobTitleModalProps {
 export default function ViewJobTitleModal({ jobTitle, open, onOpenChange }: ViewJobTitleModalProps) {
     const { translate } = useTranslation();
     return (
-        <Dialog open={open} onOpenChange={onOpenChange}>
-            <DialogContent className="sm:max-w-[500px]">
-                <DialogHeader>
-                    <DialogTitle>{translate('jobTitles.modals.view.title')}</DialogTitle>
-                </DialogHeader>
-
+        <SharedModal
+            open={open}
+            onOpenChange={onOpenChange}
+            title={translate('jobTitles.modals.view.title')}
+            description={''}
+            form={
                 <Card className="border-0 shadow-none">
                     <CardHeader className="p-0 mb-4">
                         <CardTitle className="flex items-center justify-between">
                             <span>{jobTitle.title}</span>
                             <Badge variant={jobTitle.is_active ? 'default' : 'secondary'}>
-                                {jobTitle.is_active ? 'Active' : 'Inactive'}
+                                {jobTitle.is_active ? translate('main.active') : translate('main.inactive')}
                             </Badge>
                         </CardTitle>
                     </CardHeader>
@@ -60,7 +60,7 @@ export default function ViewJobTitleModal({ jobTitle, open, onOpenChange }: View
                         </div>
                     </CardContent>
                 </Card>
-            </DialogContent>
-        </Dialog>
+            }
+        />
     );
 }

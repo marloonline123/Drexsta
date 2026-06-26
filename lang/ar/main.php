@@ -43,7 +43,7 @@ return [
         'date' => 'التاريخ',
         'actions' => 'الإجراءات',
     ],
-    'actions.options' => [
+    'action_options' => [
         'view' => 'عرض',
         'edit' => 'تعديل',
         'delete' => 'حذف',

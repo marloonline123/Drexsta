@@ -3,6 +3,7 @@ import { DeleteModal } from '@/Components/Shared/DeleteModal';
 import { router } from '@inertiajs/react';
 import { useState } from 'react';
 import { toast } from 'sonner';
+import useTranslation from '@/Hooks/use-translation';
 
 interface DeleteEmploymentTypeModalProps {
     employmentType: EmploymentType;
@@ -18,6 +19,7 @@ export default function DeleteEmploymentTypeModal({
     onSuccess 
 }: DeleteEmploymentTypeModalProps) {
     const [isDeleting, setIsDeleting] = useState(false);
+    const { translate } = useTranslation();
 
     const handleDelete = async () => {
         if (isDeleting) return;
@@ -26,11 +28,11 @@ export default function DeleteEmploymentTypeModal({
         try {
             router.delete(route('dashboard.employment-types.destroy', employmentType.id), {
                 onSuccess: () => {
-                    toast.success('Employment type deleted successfully');
+                    toast.success(translate('flash.deleteSuccess'));
                     onSuccess();
                 },
                 onError: () => {
-                    toast.error('Failed to delete employment type');
+                    toast.error(translate('flash.deleteError'));
                 },
                 onFinish: () => {
                     setIsDeleting(false);
@@ -38,7 +40,7 @@ export default function DeleteEmploymentTypeModal({
                 }
             });
         } catch {
-            toast.error('Failed to delete employment type');
+            toast.error(translate('flash.deleteError'));
             setIsDeleting(false);
             onOpenChange(false);
         }
@@ -50,21 +52,21 @@ export default function DeleteEmploymentTypeModal({
             onOpenChange={onOpenChange}
             onConfirm={handleDelete}
             loading={isDeleting}
-            title={`Delete Employment Type "${employmentType.name}"`}
-            description="Are you sure you want to delete this employment type? This action cannot be undone."
-            actionButtonText="Delete Employment Type"
+            title={translate('main.confirmDelete') + ` "${employmentType.name}"`}
+            description={translate('main.deleteWarning')}
+            actionButtonText={translate('main.delete')}
         >
             <div className="space-y-4">
                 <div className="p-4 bg-muted rounded-lg">
                     <h4 className="font-medium">{employmentType.name}</h4>
                     <p className="text-sm text-muted-foreground">
-                        {employmentType.description || 'No description'}
+                        {employmentType.description || translate('employment_types.empty.description')}
                     </p>
                 </div>
 
                 <div className="text-sm text-destructive bg-destructive/10 p-3 rounded-lg">
-                    <p className="font-medium">Warning:</p>
-                    <p>This action cannot be undone. This will permanently delete the employment type.</p>
+                    <p className="font-medium">{translate('main.warning')}:</p>
+                    <p>{translate('main.deleteWarning')}</p>
                 </div>
             </div>
         </DeleteModal>

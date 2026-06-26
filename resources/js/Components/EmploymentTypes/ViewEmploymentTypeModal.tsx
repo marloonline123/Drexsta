@@ -1,9 +1,10 @@
+import SharedModal from '@/Components/Shared/SharedModal';
 import { EmploymentType } from '@/Types/employment-types';
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/Components/Ui/dialog';
-import { Button } from '@/Components/Ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/Components/Ui/card';
 import { Badge } from '@/Components/Ui/badge';
-import { Briefcase, Calendar, FileText, X, Shield } from 'lucide-react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/Components/Ui/card';
+import { Label } from '@/Components/Ui/label';
+import { format } from 'date-fns';
+import useTranslation from '@/Hooks/use-translation';
 
 interface ViewEmploymentTypeModalProps {
     employmentType: EmploymentType;
@@ -11,89 +12,55 @@ interface ViewEmploymentTypeModalProps {
     onOpenChange: (open: boolean) => void;
 }
 
-export default function ViewEmploymentTypeModal({ 
-    employmentType, 
-    open, 
-    onOpenChange 
-}: ViewEmploymentTypeModalProps) {
+export default function ViewEmploymentTypeModal({ employmentType, open, onOpenChange }: ViewEmploymentTypeModalProps) {
+    const { translate } = useTranslation();
     return (
-        <Dialog open={open} onOpenChange={onOpenChange}>
-            <DialogContent className="sm:max-w-[500px]">
-                <DialogHeader>
-                    <DialogTitle>Employment Type Details</DialogTitle>
-                    <DialogDescription>
-                        View detailed information about this employment type.
-                    </DialogDescription>
-                </DialogHeader>
-
-                <div className="space-y-4">
-                    <Card>
-                        <CardHeader className="pb-3">
-                            <div className="flex items-center gap-3">
-                                <div className="h-12 w-12 bg-primary/10 rounded-lg flex items-center justify-center">
-                                    <Briefcase className="h-6 w-6 text-primary" />
-                                </div>
-                                <div>
-                                    <CardTitle className="text-lg">{employmentType.name}</CardTitle>
-                                    <p className="text-sm text-muted-foreground">{employmentType.slug}</p>
-                                </div>
+        <SharedModal
+            open={open}
+            onOpenChange={onOpenChange}
+            title={translate('employment_types.modals.view.title')}
+            description={''}
+            form={
+                <Card className="border-0 shadow-none">
+                    <CardHeader className="p-0 mb-4">
+                        <CardTitle className="flex items-center justify-between">
+                            <span>{employmentType.name}</span>
+                            <Badge variant={employmentType.is_active ? 'default' : 'secondary'}>
+                                {employmentType.is_active ? translate('main.active') : translate('main.inactive')}
+                            </Badge>
+                        </CardTitle>
+                    </CardHeader>
+                    <CardContent className="p-0">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div className="space-y-2">
+                                <Label>{translate('employment_types.fields.slug')}</Label>
+                                <p className="text-sm">{employmentType.slug}</p>
                             </div>
-                        </CardHeader>
-                        <CardContent className="space-y-4">
-                            <div>
-                                <div className="flex items-center gap-2 mb-2">
-                                    <FileText className="h-4 w-4 text-muted-foreground" />
-                                    <span className="text-sm font-medium">Description</span>
-                                </div>
-                                <p className="text-sm text-muted-foreground pl-6">
-                                    {employmentType.description || 'No description provided'}
+                            
+                            <div className="space-y-2">
+                                <Label>{translate('employment_types.fields.createdAt')}</Label>
+                                <p className="text-sm">
+                                    {employmentType.created_at ? format(new Date(employmentType.created_at), 'PPP') : 'N/A'}
                                 </p>
                             </div>
-
-                            <div>
-                                <div className="flex items-center gap-2 mb-2">
-                                    <Shield className="h-4 w-4 text-muted-foreground" />
-                                    <span className="text-sm font-medium">Status</span>
-                                </div>
-                                <div className="pl-6">
-                                    <Badge variant={employmentType.is_active ? 'default' : 'secondary'}>
-                                        {employmentType.is_active ? 'Active' : 'Inactive'}
-                                    </Badge>
-                                </div>
-                            </div>
-
-                            <div>
-                                <div className="flex items-center gap-2 mb-2">
-                                    <Calendar className="h-4 w-4 text-muted-foreground" />
-                                    <span className="text-sm font-medium">Created</span>
-                                </div>
-                                <p className="text-sm text-muted-foreground pl-6">
-                                    {employmentType.created_at}
+                            
+                            <div className="space-y-2 md:col-span-2">
+                                <Label>{translate('employment_types.fields.description')}</Label>
+                                <p className="text-sm">
+                                    {employmentType.description || translate('employment_types.empty.description')}
                                 </p>
                             </div>
-
+                            
                             {employmentType.company && (
-                                <div>
-                                    <div className="flex items-center gap-2 mb-2">
-                                        <Briefcase className="h-4 w-4 text-muted-foreground" />
-                                        <span className="text-sm font-medium">Company</span>
-                                    </div>
-                                    <p className="text-sm text-muted-foreground pl-6">
-                                        {employmentType.company.name}
-                                    </p>
+                                <div className="space-y-2 md:col-span-2">
+                                    <Label>{translate('employment_types.fields.company')}</Label>
+                                    <p className="text-sm">{employmentType.company.name}</p>
                                 </div>
                             )}
-                        </CardContent>
-                    </Card>
-
-                    <div className="flex justify-end">
-                        <Button variant="outline" onClick={() => onOpenChange(false)}>
-                            <X className="h-4 w-4 mr-2" />
-                            Close
-                        </Button>
-                    </div>
-                </div>
-            </DialogContent>
-        </Dialog>
+                        </div>
+                    </CardContent>
+                </Card>
+            }
+        />
     );
 }

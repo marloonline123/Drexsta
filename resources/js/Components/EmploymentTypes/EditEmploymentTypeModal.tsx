@@ -1,38 +1,30 @@
-import { EmploymentType } from '@/Types/employment-types';
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/Components/Ui/dialog';
+import SharedModal from '@/Components/Shared/SharedModal';
 import EmploymentTypeForm from './EmploymentTypeForm';
+import useTranslation from '@/Hooks/use-translation';
 
 interface EditEmploymentTypeModalProps {
-    employmentType: EmploymentType;
     open: boolean;
     onOpenChange: (open: boolean) => void;
+    employmentType: any;
     onSuccess: () => void;
 }
 
-export default function EditEmploymentTypeModal({ 
-    employmentType, 
-    open, 
-    onOpenChange, 
-    onSuccess 
-}: EditEmploymentTypeModalProps) {
+export default function EditEmploymentTypeModal({ open, onOpenChange, employmentType, onSuccess }: EditEmploymentTypeModalProps) {
+    const { translate } = useTranslation();
     return (
-        <Dialog open={open} onOpenChange={onOpenChange}>
-            <DialogContent className="sm:max-w-[500px]">
-                <DialogHeader>
-                    <DialogTitle>Edit Employment Type</DialogTitle>
-                    <DialogDescription>
-                        Update the employment type information.
-                    </DialogDescription>
-                </DialogHeader>
-
-                {/* Employment Type Form */}
-                <EmploymentTypeForm 
+        <SharedModal
+            open={open}
+            onOpenChange={onOpenChange}
+            title={translate('employment_types.modals.edit.title')}
+            description={translate('employment_types.modals.edit.description')}
+            form={
+                <EmploymentTypeForm
                     action={route('dashboard.employment-types.update', employmentType.id)}
                     method="put"
                     employmentType={employmentType}
                     onSuccess={onSuccess}
                 />
-            </DialogContent>
-        </Dialog>
+            }
+        />
     );
 }

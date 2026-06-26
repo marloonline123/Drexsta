@@ -1,7 +1,7 @@
 import { router } from '@inertiajs/react';
 import { DeleteModal } from '@/Components/Shared/DeleteModal';
 import { JobTitle } from '@/Types/job-titles';
-import { useLanguage } from '@/Hooks/use-language';
+import useTranslation from '@/Hooks/use-translation';
 
 interface DeleteJobTitleModalProps {
     jobTitle: JobTitle;
@@ -11,7 +11,7 @@ interface DeleteJobTitleModalProps {
 }
 
 export default function DeleteJobTitleModal({ jobTitle, open, onOpenChange, onSuccess }: DeleteJobTitleModalProps) {
-    const { t } = useLanguage();
+    const { translate } = useTranslation();
 
     return (
         <DeleteModal
@@ -24,8 +24,8 @@ export default function DeleteJobTitleModal({ jobTitle, open, onOpenChange, onSu
                     },
                 });
             }}
-            title={t('common.confirmDelete') || 'Confirm Delete'}
-            description={`${t('common.deleteWarning') || 'This action cannot be undone.'} ${t('admin.jobTitles.deleteWarning') ? t('admin.jobTitles.deleteWarning') : `Are you sure you want to delete the job title "${jobTitle.title}"?`}`}
+            title={translate('main.confirmDelete') + ` "${jobTitle.title}"`}
+            description={translate('main.deleteWarning')}
         />
     );
 }

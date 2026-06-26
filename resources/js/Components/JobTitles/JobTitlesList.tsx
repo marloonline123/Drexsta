@@ -62,19 +62,19 @@ export default function JobTitlesList({ jobTitles }: JobTitlesListProps) {
                     <DropdownMenuContent align="end">
                         <DropdownMenuItem onClick={() => setViewingJobTitle(jobTitle)}>
                             <Eye className="mr-2 h-4 w-4" />
-                            {translate('jobTitles.actions.view')}
+                            {translate('main.action_options.view')}
                         </DropdownMenuItem>
                         {can('job-titles.edit') && (
                             <DropdownMenuItem onClick={() => setEditingJobTitle(jobTitle)}>
                                 <Edit className="mr-2 h-4 w-4" />
-                                {translate('jobTitles.actions.edit')}
+                                {translate('main.action_options.edit')}
                             </DropdownMenuItem>
                         )}
                         <DropdownMenuSeparator />
                         {can('job-titles.delete') && (
                             <DropdownMenuItem onClick={() => setDeletingJobTitle(jobTitle)} className="text-destructive">
                                 <Trash2 className="mr-2 h-4 w-4" />
-                                {translate('jobTitles.actions.delete')}
+                                {translate('main.action_options.delete')}
                             </DropdownMenuItem>
                         )}
                     </DropdownMenuContent>

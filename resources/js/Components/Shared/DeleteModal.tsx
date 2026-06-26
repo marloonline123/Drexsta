@@ -10,6 +10,7 @@ import {
 import { Button } from '@/Components/Ui/button';
 import { useLanguage } from '@/Hooks/use-language';
 import { AlertTriangle, Trash2, Loader2 } from 'lucide-react';
+import useTranslation from '@/Hooks/use-translation';
 
 interface DeleteModalProps {
     /** Whether the modal is open */
@@ -55,7 +56,7 @@ export function DeleteModal({
     size = 'md',
     showIcon = true,
 }: DeleteModalProps) {
-    const { t } = useLanguage();
+    const { translate } = useTranslation();
 
     const handleConfirm = async () => {
         try {
@@ -79,10 +80,10 @@ export function DeleteModal({
     };
 
     // Default values
-    const modalTitle = title || t('common.confirmDelete') || 'Confirm Delete';
-    const modalDescription = description || t('common.deleteWarning') || 'This action cannot be undone. Are you sure you want to proceed?';
-    const actionText = actionButtonText || t('common.delete') || 'Delete';
-    const cancelText = cancelButtonText || t('common.cancel') || 'Cancel';
+    const modalTitle = title || translate('main.confirmDelete') || 'Confirm Delete';
+    const modalDescription = description || translate('main.deleteWarning') || 'This action cannot be undone. Are you sure you want to proceed?';
+    const actionText = actionButtonText || translate('main.delete') || 'Delete';
+    const cancelText = cancelButtonText || translate('main.cancel') || 'Cancel';
 
     // Size classes
     const sizeClasses = {
@@ -140,7 +141,7 @@ export function DeleteModal({
                         {loading ? (
                             <>
                                 <Loader2 className="h-4 w-4 animate-spin" />
-                                {t('common.loading') || 'Loading...'}
+                                {translate('main.loading') || 'Loading...'}
                             </>
                         ) : (
                             <>

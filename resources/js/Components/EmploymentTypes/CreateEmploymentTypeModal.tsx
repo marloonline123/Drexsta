@@ -1,5 +1,6 @@
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/Components/Ui/dialog';
+import SharedModal from '@/Components/Shared/SharedModal';
 import EmploymentTypeForm from './EmploymentTypeForm';
+import useTranslation from '@/Hooks/use-translation';
 
 interface CreateEmploymentTypeModalProps {
     open: boolean;
@@ -8,23 +9,20 @@ interface CreateEmploymentTypeModalProps {
 }
 
 export default function CreateEmploymentTypeModal({ open, onOpenChange, onSuccess }: CreateEmploymentTypeModalProps) {
+    const { translate } = useTranslation();
     return (
-        <Dialog open={open} onOpenChange={onOpenChange}>
-            <DialogContent className="sm:max-w-[500px]">
-                <DialogHeader>
-                    <DialogTitle>Create Employment Type</DialogTitle>
-                    <DialogDescription>
-                        Add a new employment type to categorize your employee contracts.
-                    </DialogDescription>
-                </DialogHeader>
-
-                {/* Employment Type Form */}
+        <SharedModal
+            open={open}
+            onOpenChange={onOpenChange}
+            title={translate('employment_types.modals.create.title')}
+            description={translate('employment_types.modals.create.description')}
+            form={
                 <EmploymentTypeForm
                     action={route('dashboard.employment-types.store')}
                     method="post"
                     onSuccess={onSuccess}
                 />
-            </DialogContent>
-        </Dialog>
+            }
+        />
     );
 }

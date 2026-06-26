@@ -1,12 +1,14 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/Components/Ui/card';
 import { PaginatedData } from '@/Types/global';
 import { EmploymentType } from '@/Types/employment-types';
+import useTranslation from '@/Hooks/use-translation';
 
 interface EmploymentTypesStatsProps {
     employmentTypes: PaginatedData<EmploymentType>;
 }
 
 export default function EmploymentTypesStats({ employmentTypes }: EmploymentTypesStatsProps) {
+    const { translate } = useTranslation();
     const employmentTypesData = employmentTypes.data;
     const total = employmentTypes.meta?.total || 0;
     const activeCount = employmentTypesData.filter((et: EmploymentType) => et.is_active).length;
@@ -17,7 +19,7 @@ export default function EmploymentTypesStats({ employmentTypes }: EmploymentType
             <Card>
                 <CardHeader className="pb-2">
                     <CardTitle className="text-sm font-medium text-muted-foreground">
-                        Total Employment Types
+                        {translate('employment_types.totalEmploymentTypes')}
                     </CardTitle>
                 </CardHeader>
                 <CardContent className="pt-0">
@@ -28,7 +30,7 @@ export default function EmploymentTypesStats({ employmentTypes }: EmploymentType
             <Card>
                 <CardHeader className="pb-2">
                     <CardTitle className="text-sm font-medium text-muted-foreground">
-                        Active Types
+                        {translate('employment_types.activeEmploymentTypes')}
                     </CardTitle>
                 </CardHeader>
                 <CardContent className="pt-0">
@@ -41,7 +43,7 @@ export default function EmploymentTypesStats({ employmentTypes }: EmploymentType
             <Card>
                 <CardHeader className="pb-2">
                     <CardTitle className="text-sm font-medium text-muted-foreground">
-                        Inactive Types
+                        {translate('employment_types.inactiveEmploymentTypes')}
                     </CardTitle>
                 </CardHeader>
                 <CardContent className="pt-0">
