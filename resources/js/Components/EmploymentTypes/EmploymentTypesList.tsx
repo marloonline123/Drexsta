@@ -11,7 +11,7 @@ import EditEmploymentTypeModal from './EditEmploymentTypeModal';
 import DeleteEmploymentTypeModal from './DeleteEmploymentTypeModal';
 import ViewEmploymentTypeModal from './ViewEmploymentTypeModal';
 import { truncateText } from '@/Lib/utils';
-import { hasPermissionTo } from '@/Lib/permissions';
+import usePermissions from '@/hooks/use-permissions';
 import { Auth } from '@/Types';
 
 interface EmploymentTypesListProps {
@@ -20,6 +20,7 @@ interface EmploymentTypesListProps {
 
 export default function EmploymentTypesList({ employmentTypes }: EmploymentTypesListProps) {
     const { user } = usePage().props.auth as Auth;
+    const { can } = usePermissions();
     const [editingEmploymentType, setEditingEmploymentType] = useState<EmploymentType | null>(null);
     const [deletingEmploymentType, setDeletingEmploymentType] = useState<EmploymentType | null>(null);
     const [viewingEmploymentType, setViewingEmploymentType] = useState<EmploymentType | null>(null);
@@ -84,14 +85,14 @@ export default function EmploymentTypesList({ employmentTypes }: EmploymentTypes
                                                         <Eye className="mr-2 h-4 w-4" />
                                                         View
                                                     </DropdownMenuItem>
-                                                    {hasPermissionTo(user, 'employment-types.edit') && (
+                                                    {can('employment-types.edit') && (
                                                         <DropdownMenuItem onClick={() => setEditingEmploymentType(employmentType)}>
                                                             <Edit className="mr-2 h-4 w-4" />
                                                             Edit
                                                         </DropdownMenuItem>
                                                     )}
                                                     <DropdownMenuSeparator />
-                                                    {hasPermissionTo(user, 'employment-types.delete') && (
+                                                    {can('employment-types.delete') && (
                                                         <DropdownMenuItem
                                                             onClick={() => setDeletingEmploymentType(employmentType)}
                                                             className="text-destructive"

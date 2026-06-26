@@ -12,7 +12,7 @@ import { Eye, Edit } from 'lucide-react';
 import AppLayout from '@/Layouts/AppLayout';
 import { type BreadcrumbItem, Auth, JobApplication } from '@/Types';
 import { router } from '@inertiajs/core';
-import { hasPermissionTo } from '@/Lib/permissions';
+import usePermissions from '@/hooks/use-permissions';
 import { useState } from 'react';
 import { DeleteModal } from '@/Components/Shared/DeleteModal';
 import UpdateStatusModal from '@/Components/JobApplications/UpdateStatusModal';
@@ -34,6 +34,7 @@ interface JobApplicationsIndexProps {
 
 export default function JobApplicationsIndex({ applications }: JobApplicationsIndexProps) {
   const { user } = usePage().props.auth as Auth;
+  const { can } = usePermissions();
   const applicationsData = applications.data;
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [updateModalOpen, setUpdateModalOpen] = useState(false);
@@ -145,7 +146,7 @@ export default function JobApplicationsIndex({ applications }: JobApplicationsIn
                               <Eye className="h-4 w-4" />
                             </a>
                           </Button>
-                          {hasPermissionTo(user, 'job-applications.edit') && (
+                          {can('job-applications.edit') && (
                             <Button
                               variant="outline"
                               size="sm"
@@ -154,7 +155,7 @@ export default function JobApplicationsIndex({ applications }: JobApplicationsIn
                               <Edit className="h-4 w-4" />
                             </Button>
                           )}
-                          {hasPermissionTo(user, 'job-applications.delete') && (
+                          {can('job-applications.delete') && (
                             <Button
                               variant="outline"
                               size="sm"

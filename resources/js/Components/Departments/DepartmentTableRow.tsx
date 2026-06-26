@@ -19,12 +19,14 @@ import {
 import { Department } from '@/Types/deparments';
 import DeleteDepartmentModal from './DeleteDepartmentModal';
 import { useState } from 'react';
-import { hasPermissionTo } from '@/Lib/permissions';
+import usePermissions from '@/hooks/use-permissions';
 import { Auth } from '@/Types';
 
 export default function DepartmentTableRow({ department }: { department: Department }) {
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const { user } = usePage().props.auth as Auth;
+    const { can } = usePermissions();
+    const { can } = usePermissions();
 
     return (
         <TableRow key={department.id}>
@@ -86,7 +88,7 @@ export default function DepartmentTableRow({ department }: { department: Departm
                                 View
                             </DropdownMenuItem>
                         </Link>
-                        {hasPermissionTo(user, 'departments.edit') && (
+                        {can('departments.edit') && (
                             <Link href={route('dashboard.departments.edit', department.slug)}>
                                 <DropdownMenuItem>
                                     <Edit className="mr-2 h-4 w-4" />
@@ -95,7 +97,7 @@ export default function DepartmentTableRow({ department }: { department: Departm
                             </Link>
                         )}
                         <DropdownMenuSeparator />
-                        {hasPermissionTo(user, 'departments.delete') && (
+                        {can('departments.delete') && (
                             <DropdownMenuItem
                                 onClick={() => setShowDeleteModal(true)}
                                 className="text-destructive"

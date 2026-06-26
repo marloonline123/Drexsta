@@ -13,7 +13,7 @@ import Filter from '@/Components/Shared/Filter';
 import CompaniesGrid from '@/Components/Companies/CompaniesGrid';
 import CompaniesStats from '@/Components/Companies/CompaniesStats';
 import { t } from 'i18next';
-import { hasPermissionTo } from '@/Lib/permissions';
+import usePermissions from '@/hooks/use-permissions';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -29,6 +29,7 @@ const breadcrumbs: BreadcrumbItem[] = [
 export default function CompaniesPage({ companies }: { companies: CompaniesResponse }) {
     const companiesData = companies.data || [];
     const { user } = usePage().props.auth as Auth;
+    const { can } = usePermissions();
 
     console.log('user:', user);
 
@@ -48,7 +49,7 @@ export default function CompaniesPage({ companies }: { companies: CompaniesRespo
                             {t('companies.description')}
                         </p>
                     </div>
-                    {hasPermissionTo(user, 'companies.create') && (
+                    {can('companies.create') && (
                         <Link href={route('dashboard.companies.create')} className={buttonVariants()}>
                             <Plus className="h-4 w-4 mr-2" />
                             {t('companies.addCompany')}

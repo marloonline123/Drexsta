@@ -10,7 +10,7 @@ import DepartmentsList from '@/Components/Departments/DepartmentsList';
 import { Plus } from 'lucide-react';
 import Filter from '@/Components/Shared/Filter';
 import Pagination from '@/Components/Shared/Pagination';
-import { hasPermissionTo } from '@/Lib/permissions';
+import usePermissions from '@/hooks/use-permissions';
 import { Auth } from '@/Types';
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -31,6 +31,7 @@ interface DepartmentsIndexProps {
 export default function DepartmentsIndex({ departments }: DepartmentsIndexProps) {
     const departmentsData = departments.data;
     const { user } = usePage().props.auth as Auth;
+    const { can } = usePermissions();
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
@@ -46,7 +47,7 @@ export default function DepartmentsIndex({ departments }: DepartmentsIndexProps)
                         </p>
                     </div>
 
-                    {hasPermissionTo(user, 'departments.create') && (
+                    {can('departments.create') && (
                         <Link href="/dashboard/departments/create">
                             <Button>
                                 <Plus className="mr-2 h-4 w-4" />

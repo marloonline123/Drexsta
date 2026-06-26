@@ -12,7 +12,7 @@ import Filter from '@/Components/Shared/Filter';
 import Pagination from '@/Components/Shared/Pagination';
 import { useState, useEffect } from 'react';
 import EmptyResource from '@/Components/Shared/EmptyResource';
-import { hasPermissionTo } from '@/Lib/permissions';
+import usePermissions from '@/hooks/use-permissions';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -32,6 +32,7 @@ interface RolesIndexProps {
 
 export default function RolesIndex({ roles, permissions }: RolesIndexProps) {
     const { user } = usePage().props.auth as Auth;
+    const { can } = usePermissions();
     const rolesData = roles?.data || [];
     const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
     const [groupedPermissions, setGroupedPermissions] = useState<Record<string, any[]>>(permissions || {});
@@ -68,7 +69,7 @@ export default function RolesIndex({ roles, permissions }: RolesIndexProps) {
                         </p>
                     </div>
 
-                    {hasPermissionTo(user, 'roles.create') && (
+                    {can('roles.create') && (
                         <Button onClick={() => setIsCreateModalOpen(true)}>
                             <Plus className="mr-2 h-4 w-4" />
                             Add Role

@@ -21,13 +21,15 @@ import { useState } from 'react';
 import { useLanguage } from '@/Hooks/use-language';
 import { router, usePage } from '@inertiajs/react';
 import DeleteCompanyModal from './DeleteCompanyModal';
-import { hasPermissionTo } from '@/Lib/permissions';
+import usePermissions from '@/hooks/use-permissions';
 import { Auth } from '@/Types';
 
 export default function CompanyCard({ company }: { company: Company }) {
     const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
     const { t } = useLanguage();
     const { user } = usePage().props.auth as Auth;
+    const { can } = usePermissions();
+    const { can } = usePermissions();
 
     const getStatusBadge = (isActive: boolean) => {
         return isActive ? (
@@ -70,13 +72,13 @@ export default function CompanyCard({ company }: { company: Company }) {
                                 <Eye className="h-4 w-4 mr-2" />
                                 {t('common.view')}
                             </DropdownMenuItem>
-                            {hasPermissionTo(user, 'companies.edit') && (
+                            {can('companies.edit') && (
                                 <DropdownMenuItem onClick={() => router.visit(route('dashboard.companies.edit', company.slug))}>
                                     <Edit className="h-4 w-4 mr-2" />
                                     {t('common.edit')}
                                 </DropdownMenuItem>
                             )}
-                            {hasPermissionTo(user, 'companies.delete') && (
+                            {can('companies.delete') && (
                                 <DropdownMenuItem onClick={() => setShowDeleteModal(true)}>
                                     <Trash2 className="h-4 w-4 mr-2" />
                                     {t('common.delete')}

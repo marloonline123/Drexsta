@@ -12,7 +12,7 @@ import Filter from '@/Components/Shared/Filter';
 import Pagination from '@/Components/Shared/Pagination';
 import { useState } from 'react';
 import EmptyResource from '@/Components/Shared/EmptyResource';
-import { hasPermissionTo } from '@/Lib/permissions';
+import usePermissions from '@/hooks/use-permissions';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -31,6 +31,7 @@ interface EmploymentTypesIndexProps {
 
 export default function EmploymentTypesIndex({ employmentTypes }: EmploymentTypesIndexProps) {
     const { user } = usePage().props.auth as Auth;
+    const { can } = usePermissions();
     const employmentTypesData = employmentTypes?.data || [];
     const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
 
@@ -53,7 +54,7 @@ export default function EmploymentTypesIndex({ employmentTypes }: EmploymentType
                         </p>
                     </div>
 
-                    {hasPermissionTo(user, 'employment-types.create') && (
+                    {can('employment-types.create') && (
                         <Button onClick={() => setIsCreateModalOpen(true)}>
                             <Plus className="mr-2 h-4 w-4" />
                             Add Employment Type

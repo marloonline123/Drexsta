@@ -3,7 +3,7 @@ import { Button } from '@/Components/Ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/Components/Ui/card';
 import { StatsCard } from '@/Components/Ui/stats-card';
 import AppLayout from '@/Layouts/AppLayout';
-import { hasPermissionTo } from '@/Lib/permissions';
+import usePermissions from '@/hooks/use-permissions';
 import { DashboardProps } from '@/Types/main';
 import { type Auth } from '@/Types';
 import { Head, usePage } from '@inertiajs/react';
@@ -46,9 +46,11 @@ export default function Dashboard({ personalStats, recentActivities, quickAction
     const { t } = useLanguage();
     const page = usePage();
     const { user } = page.props.auth as Auth;
+    const { can } = usePermissions();
+    const { can } = usePermissions();
 
     const canViewCompanyMetrics =
-        hasPermissionTo(user, 'employees.view') || hasPermissionTo(user, 'companies.view');
+        can('employees.view') || can('companies.view');
 
     const getStatusColor = (status: string) => {
         switch (status.toLowerCase()) {

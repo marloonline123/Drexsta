@@ -10,7 +10,7 @@ import { usePage } from '@inertiajs/react';
 import EditRoleModal from './EditRoleModal';
 import DeleteRoleModal from './DeleteRoleModal';
 import ViewRoleModal from './ViewRoleModal';
-import { hasPermissionTo } from '@/Lib/permissions';
+import usePermissions from '@/hooks/use-permissions';
 import { Auth } from '@/Types';
 
 interface RolesListProps {
@@ -20,6 +20,7 @@ interface RolesListProps {
 
 export default function RolesList({ roles, groupedPermissions }: RolesListProps) {
     const { user } = usePage().props.auth as Auth;
+    const { can } = usePermissions();
     const [editingRole, setEditingRole] = useState<Role | null>(null);
     const [deletingRole, setDeletingRole] = useState<Role | null>(null);
     const [viewingRole, setViewingRole] = useState<Role | null>(null);
@@ -88,14 +89,14 @@ export default function RolesList({ roles, groupedPermissions }: RolesListProps)
                                                         <Eye className="mr-2 h-4 w-4" />
                                                         View
                                                     </DropdownMenuItem>
-                                                    {hasPermissionTo(user, 'roles.edit') && (
+                                                    {can('roles.edit') && (
                                                         <DropdownMenuItem onClick={() => setEditingRole(role)}>
                                                             <Edit className="mr-2 h-4 w-4" />
                                                             Edit
                                                         </DropdownMenuItem>
                                                     )}
                                                     <DropdownMenuSeparator />
-                                                    {hasPermissionTo(user, 'roles.delete') && (
+                                                    {can('roles.delete') && (
                                                         <DropdownMenuItem
                                                             onClick={() => setDeletingRole(role)}
                                                             className="text-destructive"

@@ -4,15 +4,7 @@ declare global {
     const route: typeof routeFn;
 }
 
-export type PaginatedData<T, M extends Record<string, unknown> = Record<string, never>> = {
-    data: T[];
-    links: {
-        first: string | null;
-        last: string | null;
-        prev: string | null;
-        next: string | null;
-    };
-    meta: {
+export interface PaginationMeta  {
         current_page: number;
         from: number | null;
         last_page: number;
@@ -21,6 +13,18 @@ export type PaginatedData<T, M extends Record<string, unknown> = Record<string, 
         per_page: number;
         to: number | null;
         total: number;
-    } & M;
+    };
+
+export interface PaginationLinks {
+        first: string | null;
+        last: string | null;
+        prev: string | null;
+        next: string | null;
+    };
+
+export type PaginatedData<T> = {
+    data: T[];
+    links: PaginationLinks;
+    meta: PaginationMeta;
 };
 

@@ -11,7 +11,7 @@ import { useState } from 'react';
 import CreateAbilityModal from '@/Components/Abilities/CreateAbilityModal';
 import AbilitiesList from '@/Components/Abilities/AbilitiesList';
 import EmptyResource from '@/Components/Shared/EmptyResource';
-import { hasPermissionTo } from '@/Lib/permissions';
+import usePermissions from '@/hooks/use-permissions';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -30,6 +30,7 @@ interface AbilitiesIndexProps {
 
 export default function AbilitiesIndex({ abilities }: AbilitiesIndexProps) {
     const { user } = usePage().props.auth as Auth;
+    const { can } = usePermissions();
     const abilitiesData = abilities?.data || [];
     const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
 
@@ -50,7 +51,7 @@ export default function AbilitiesIndex({ abilities }: AbilitiesIndexProps) {
                         </p>
                     </div>
 
-                    {hasPermissionTo(user, 'abilities.create') && (
+                    {can('abilities.create') && (
                         <Button onClick={() => setIsCreateModalOpen(true)}>
                             <Plus className="mr-2 h-4 w-4" />
                             Add Ability

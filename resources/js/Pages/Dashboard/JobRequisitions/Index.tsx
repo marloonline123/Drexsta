@@ -12,7 +12,7 @@ import AppLayout from '@/Layouts/AppLayout';
 import { type BreadcrumbItem, Auth } from '@/Types';
 import { JobRequisition } from '@/Types/job-requisitions';
 import { router } from '@inertiajs/core';
-import { hasPermissionTo } from '@/Lib/permissions';
+import usePermissions from '@/hooks/use-permissions';
 
 const breadcrumbs: BreadcrumbItem[] = [
   {
@@ -31,6 +31,7 @@ interface JobRequisitionsIndexProps {
 
 export default function JobRequisitionsIndex({ requisitions }: JobRequisitionsIndexProps) {
   const { user } = usePage().props.auth as Auth;
+  const { can } = usePermissions();
   const requisitionsData = requisitions.data;
   const getStatusBadge = (status: string) => {
     switch (status) {
@@ -79,7 +80,7 @@ export default function JobRequisitionsIndex({ requisitions }: JobRequisitionsIn
             </p>
           </div>
 
-          {hasPermissionTo(user, 'job-requisitions.create') && (
+          {can('job-requisitions.create') && (
             <Button asChild>
               <a href={route('dashboard.job-requisitions.create')}>
                 <Plus className="mr-2 h-4 w-4" />
@@ -135,14 +136,14 @@ export default function JobRequisitionsIndex({ requisitions }: JobRequisitionsIn
                               <Eye className="h-4 w-4" />
                             </a>
                           </Button>
-                          {hasPermissionTo(user, 'job-requisitions.edit') && (
+                          {can('job-requisitions.edit') && (
                             <Button variant="outline" size="sm" asChild>
                               <a href={route('dashboard.job-requisitions.edit', requisition.id)}>
                                 <Edit className="h-4 w-4" />
                               </a>
                             </Button>
                           )}
-                          {hasPermissionTo(user, 'job-requisitions.delete') && (
+                          {can('job-requisitions.delete') && (
                             <Button
                               variant="outline"
                               size="sm"

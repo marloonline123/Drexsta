@@ -1,6 +1,6 @@
 import { Toaster } from '@/Components/Ui/sonner';
 import AppLayoutTemplate from '@/Layouts/App/AppSidebarLayout';
-import { type BreadcrumbItem } from '@/Types';
+import { PageProps, type BreadcrumbItem } from '@/Types';
 import { usePage } from '@inertiajs/react';
 import { useEffect, type ReactNode } from 'react';
 import { toast } from 'sonner';
@@ -11,15 +11,16 @@ interface AppLayoutProps {
 }
 
 export default function AppLayout({ children, breadcrumbs, ...props }: AppLayoutProps) {
-    const flashMessage = usePage().props.flash as { success?: string; error?: string } | undefined;
+    const { flash } = usePage<PageProps>().props;
+    
     useEffect(() => {
-        if (flashMessage?.success) {
-            toast.success(flashMessage.success);
+        if (flash?.success) {
+            toast.success(flash.success);
         }
-        if (flashMessage?.error) {
-            toast.error(flashMessage.error);
+        if (flash?.error) {
+            toast.error(flash.error);
         }
-    }, [flashMessage?.error, flashMessage?.success]);
+    }, [flash?.error, flash?.success]);
 
     return (
         <AppLayoutTemplate breadcrumbs={breadcrumbs} {...props}>
