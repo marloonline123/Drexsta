@@ -38,10 +38,18 @@ return [
     'select' => 'Select',
     'actions' => 'Actions',
     'headers' => [
+        'name' => 'Name',
         'title' => 'Title',
         'status' => 'Status',
         'date' => 'Date',
         'actions' => 'Actions',
+        'manager' => 'Manager',
+        'employees' => 'Employees',
+        'budget' => 'Budget',
+        'employee' => 'Employee',
+        'position' => 'Position',
+        'email' => 'Email',
+        'role' => 'Role',
     ],
     'action_options' => [
         'view' => 'View',

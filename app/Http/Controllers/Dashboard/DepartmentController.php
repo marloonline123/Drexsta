@@ -64,7 +64,7 @@ class DepartmentController extends BaseController
 
         event(new DepartmentCreated($department));
 
-        return redirect()->route('dashboard.departments.index')->with('success', 'Department created successfully.');
+        return redirect()->route('dashboard.departments.index')->with('success', __('departments.flash.created'));
     }
 
     /**
@@ -120,7 +120,7 @@ class DepartmentController extends BaseController
         }
         $department->save();
 
-        return back()->with('success', 'Department updated successfully.');
+        return back()->with('success', __('departments.flash.updated'));
     }
 
     /**
@@ -131,6 +131,6 @@ class DepartmentController extends BaseController
         $this->authorize('delete', $department);
         $department->delete();
 
-        return redirect()->route('dashboard.departments.index')->with('success', 'Department deleted successfully.');
+        return redirect()->route('dashboard.departments.index')->with('success', __('departments.flash.deleted'));
     }
 }

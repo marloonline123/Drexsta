@@ -38,10 +38,18 @@ return [
     'select' => 'اختر',
     'actions' => 'الإجراءات',
     'headers' => [
+        'name' => 'الاسم',
         'title' => 'العنوان',
         'status' => 'الحالة',
         'date' => 'التاريخ',
         'actions' => 'الإجراءات',
+        'manager' => 'المدير',
+        'employees' => 'الموظفين',
+        'budget' => 'الميزانية',
+        'employee' => 'الموظف',
+        'position' => 'المسمى الوظيفي',
+        'email' => 'البريد الإلكتروني',
+        'role' => 'الدور',
     ],
     'action_options' => [
         'view' => 'عرض',

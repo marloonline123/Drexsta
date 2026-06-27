@@ -22,8 +22,8 @@ class DepartmentResource extends JsonResource
             'description' => $this->description,
             'is_active' => $this->is_active,
             'annual_budget' => $this->annual_budget,
-            'manager' => $this->whenLoaded('managerRelation', fn () => (new UserResource($this->managerRelation->first()))->resolve()),
-            'employees' => $this->whenLoaded('employees', fn() => UserResource::collection($this->employees)->resolve()),
+            'manager' => $this->whenLoaded('managerRelation', fn () => (new UserResource($this->managerRelation->first()))),
+            'employees' => $this->whenLoaded('employees', fn() => UserResource::collection($this->employees)),
             'employees_count' => $this->whenLoaded('employees', function () {
                 return $this->employees()->count();
             }),
