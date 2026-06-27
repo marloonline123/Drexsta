@@ -39,6 +39,11 @@ return [
             'title' => 'Employment Type Details',
         ],
     ],
+    'flash' => [
+        'created' => 'Employment type created successfully',
+        'updated' => 'Employment type updated successfully',
+        'deleted' => 'Employment type deleted successfully',
+    ],
     'fields' => [
         'slug' => 'Slug',
         'createdAt' => 'Created At',
