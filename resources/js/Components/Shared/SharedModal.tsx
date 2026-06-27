@@ -6,10 +6,10 @@ interface SharedModalProps {
     onOpenChange: (open: boolean) => void;
     title: string | ReactNode;
     description: string | ReactNode;
-    form: string | ReactNode;
+    children: string | ReactNode;
 }
 
-export default function SharedModal({ open, onOpenChange, title, description, form }: SharedModalProps) {
+export default function SharedModal({ open, onOpenChange, title, description, children }: SharedModalProps) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
             <DialogContent className="sm:max-w-[500px]">
@@ -19,9 +19,7 @@ export default function SharedModal({ open, onOpenChange, title, description, fo
                         {description}
                     </DialogDescription>
                 </DialogHeader>
-
-                {/* Job Title Form */}
-                {form}
+                {children}
             </DialogContent>
         </Dialog>
   )

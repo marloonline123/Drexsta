@@ -1,19 +1,19 @@
-import { Head } from '@inertiajs/react';
-import AppLayout from '@/Layouts/AppLayout';
-import { type BreadcrumbItem } from '@/Types';
-import { Button } from '@/Components/Ui/button';
-import { EmploymentType } from '@/Types/employment-types';
-import { PaginatedData } from '@/Types/global';
-import EmploymentTypesList from '@/Components/EmploymentTypes/EmploymentTypesList';
 import CreateEmploymentTypeModal from '@/Components/EmploymentTypes/CreateEmploymentTypeModal';
-import { Plus, Briefcase } from 'lucide-react';
-import Filter from '@/Components/Shared/Filter';
-import { useState } from 'react';
+import EmploymentTypesList from '@/Components/EmploymentTypes/EmploymentTypesList';
 import EmptyResource from '@/Components/Shared/EmptyResource';
+import Filter from '@/Components/Shared/Filter';
 import PageHeader from '@/Components/Shared/PageHeader';
 import ResourceList from '@/Components/Shared/ResourceList';
+import { Button } from '@/Components/Ui/button';
 import useTranslation from '@/Hooks/use-translation';
+import AppLayout from '@/Layouts/AppLayout';
+import { type BreadcrumbItem } from '@/Types';
+import { EmploymentType } from '@/Types/employment-types';
+import { PaginatedData } from '@/Types/global';
 import usePermissions from '@/hooks/use-permissions';
+import { Head } from '@inertiajs/react';
+import { Briefcase, Plus } from 'lucide-react';
+import { useState } from 'react';
 
 interface EmploymentTypesIndexProps {
     employmentTypes: PaginatedData<EmploymentType>;
@@ -35,7 +35,7 @@ export default function EmploymentTypesIndex({ employmentTypes }: EmploymentType
             href: route('dashboard.employment-types.index'),
         },
     ];
-    
+
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Employment Types - Administration" />
@@ -44,7 +44,7 @@ export default function EmploymentTypesIndex({ employmentTypes }: EmploymentType
                 {/* Header */}
                 <PageHeader
                     title={
-                        <h1 className="text-3xl font-bold tracking-tight flex items-center gap-2">
+                        <h1 className="flex items-center gap-2 text-3xl font-bold tracking-tight">
                             <Briefcase className="h-8 w-8" />
                             {translate('employment_types.title')}
                         </h1>
@@ -62,17 +62,17 @@ export default function EmploymentTypesIndex({ employmentTypes }: EmploymentType
 
                 {/* Filters and Search */}
                 <Filter
-                    routeName='dashboard.employment-types.index'
+                    routeName="dashboard.employment-types.index"
                     fields={{
                         search: { type: 'text', placeholder: translate('employment_types.searchPlaceholder') },
                         status: {
-                            type: 'select', 
-                            placeholder: translate('main.select'), 
+                            type: 'select',
+                            placeholder: translate('main.select'),
                             options: [
                                 { value: 'all', label: translate('main.all') },
                                 { value: 'active', label: translate('main.active') },
                                 { value: 'inactive', label: translate('main.inactive') },
-                            ]
+                            ],
                         },
                     }}
                 />
@@ -80,16 +80,20 @@ export default function EmploymentTypesIndex({ employmentTypes }: EmploymentType
                 {/* Employment Types List */}
                 <ResourceList
                     dataLenght={employmentTypesData.length}
-                    filled={
-                        <EmploymentTypesList 
-                            employmentTypes={employmentTypesData} 
-                        />
-                    }
+                    filled={<EmploymentTypesList employmentTypes={employmentTypesData} />}
                     empty={
-                        <EmptyResource 
+                        <EmptyResource
                             icon={Briefcase}
-                            title={translate('common.noData')}
+                            title={translate('main.noData')}
                             description={translate('employment_types.emptyDescription')}
+                            action={
+                                can('employment-types.create') && (
+                                    <Button onClick={() => setIsCreateModalOpen(true)}>
+                                        <Plus className="mr-2 h-4 w-4" />
+                                        {translate('employment_types.addType')}
+                                    </Button>
+                                )
+                            }
                         />
                     }
                     paginationData={employmentTypes?.meta}

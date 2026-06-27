@@ -48,6 +48,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::resource('companies', CompanyController::class);
 
         // Departments
+        Route::patch('departments/{department}/toggle-status', ToggleIsActiveController::class)
+            ->defaults('resource_model', \App\Models\Department::class)
+            ->middleware('throttle:regular')
+            ->name('departments.toggle-status');
         Route::resource('departments', DepartmentController::class);
 
         // Employment Types
