@@ -35,6 +35,11 @@ return [
             'title' => 'Job Title Details',
         ],
     ],
+    'flash' => [
+        'created' => 'Job title created successfully',
+        'updated' => 'Job title updated successfully',
+        'deleted' => 'Job title deleted successfully',
+    ],
     'fields' => [
         'slug' => 'Slug',
         'createdAt' => 'Created At',
