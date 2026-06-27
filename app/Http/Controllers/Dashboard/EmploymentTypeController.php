@@ -46,7 +46,7 @@ class EmploymentTypeController extends BaseController
         $data['slug'] = generateSlug($data['name']);
         EmploymentType::create($data);
 
-        return back()->with('success', 'Employment type created successfully');
+        return back()->with('success', __('employment_types.flash.created'));
     }
 
     /**
@@ -58,7 +58,7 @@ class EmploymentTypeController extends BaseController
         $data = $request->validated();
         $employmentType->update($data);
 
-        return back()->with('success', 'Employment type updated successfully');
+        return back()->with('success', __('employment_types.flash.updated'));
     }
 
     /**
@@ -69,6 +69,6 @@ class EmploymentTypeController extends BaseController
         $this->authorize('delete', $employmentType);
         $employmentType->delete();
 
-        return back()->with('success', 'Employment type deleted successfully');
+        return back()->with('success', __('employment_types.flash.deleted'));
     }
 }

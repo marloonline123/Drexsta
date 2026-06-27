@@ -51,7 +51,7 @@ class JobTitleController extends BaseController
         $data['slug'] = generateSlug($data['title']);
         JobTitle::create($data);
 
-        return back()->with('success', 'Job title created successfully');
+        return back()->with('success', __('job_titles.flash.created'));
     }
 
     /**
@@ -63,7 +63,7 @@ class JobTitleController extends BaseController
         $data = $request->validated();
         $jobTitle->update($data);
 
-        return back()->with('success', 'Job title updated successfully');
+        return back()->with('success', __('job_titles.flash.updated'));
     }
 
     /**
@@ -74,6 +74,6 @@ class JobTitleController extends BaseController
         $this->authorize('delete', $jobTitle);
         $jobTitle->delete();
 
-        return back()->with('success', 'Job title deleted successfully');
+        return back()->with('success', __('job_titles.flash.deleted'));
     }
 }
