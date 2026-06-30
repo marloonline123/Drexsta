@@ -15,11 +15,11 @@ export default function EditJobTitleModal({ jobTitle, open, onOpenChange, onSucc
     return (
         <SharedModal
             title={translate('job_titles.modals.edit.title')}
-            description={translate('jobTitles.modals.edit.description')}
-            form={
+            description={translate('job_titles.modals.edit.description')}
+            children={
                 <JobTitleForm
                     jobTitle={jobTitle}
-                    action={route('dashboard.job-titles.update')}
+                    action={route('dashboard.job-titles.update', jobTitle)}
                     method="post"
                     onSuccess={onSuccess}
                 />

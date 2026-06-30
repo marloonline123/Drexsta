@@ -1,5 +1,9 @@
 <?php
 
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Str;
 
 function generateSlug($string, $separator = '-')
 {
@@ -41,11 +45,29 @@ function generateSlug($string, $separator = '-')
     return $string;
 }
 
-function uniqueSlug(string $model, string $title): string {
-    $slug = generateSlug($title);
-    if ($model::where('slug', $slug)->exists()) {
-        $slug = $slug . '-' . rand(1000, 9999);
-        return uniqueSlug($model, $slug);
+function generateUniqueSlug(string $model, string $title, ?int $ignoreId = null, string $column = 'slug'): string
+{
+    if (! class_exists($model) || ! is_subclass_of($model, Model::class)) {
+        throw new InvalidArgumentException("Model {$model} does not exist.");
     }
-    return $slug;
+
+    $baseSlug = $title === '' ? Str::random() : generateSlug($title);
+
+    $existingSlugs = $model::where($column, 'LIKE', $baseSlug . '%')
+        ->when($ignoreId, fn($q) => $q->whereKeyNot($ignoreId))
+        ->pluck($column)
+        ->unique();
+
+    if ($existingSlugs->doesntContain($baseSlug)) {
+        return $baseSlug;
+    }
+
+    $maxSuffix = 1;
+    foreach ($existingSlugs as $existingSlug) {
+        if (preg_match('/^' . preg_quote($baseSlug, '/') . '-([0-9]+)$/', $existingSlug, $matches)) {
+            $maxSuffix = max($maxSuffix, (int)$matches[1]);
+        }
+    }
+
+    return "{$baseSlug}-" . ($maxSuffix + 1);
 }

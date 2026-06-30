@@ -18,9 +18,9 @@ export default function ViewJobTitleModal({ jobTitle, open, onOpenChange }: View
         <SharedModal
             open={open}
             onOpenChange={onOpenChange}
-            title={translate('jobTitles.modals.view.title')}
+            title={translate('job_titles.modals.view.title')}
             description={''}
-            form={
+            children={
                 <Card className="border-0 shadow-none">
                     <CardHeader className="p-0 mb-4">
                         <CardTitle className="flex items-center justify-between">

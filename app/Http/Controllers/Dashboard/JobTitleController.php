@@ -23,16 +23,16 @@ class JobTitleController extends BaseController
             'status' => 'nullable|in:active,inactive',
         ]);
 
-        $user = Auth::user();
-        $company = $user->activeCompany;
+        $status = $request->has('status') ? $request->get('status') === 'active' : null;
+        $searchTerm = $request->get('search');
 
-        $jobTitles = JobTitle::search($request->get('search'), ['title', 'description'])
-            ->filterBy('is_active', $request->has('status') ? $request->get('status') === 'active' : null)
+        $jobTitles = JobTitle::search($searchTerm, ['title', 'description'])
+            ->filterBy('is_active', $status)
             ->latest()
             ->paginate(12)
-            ->withQueryString() ?? [];
+            ->withQueryString();
 
-        $totalJobTitles = $company?->jobTitles()->count() ?? 0;
+        $totalJobTitles = $request->user()->activeCompany?->jobTitles()->count() ?? 0;
         $jobTitlesCollection = JobTitleResource::collection($jobTitles)
             ->additional(['meta' => ['total_job_titles' => $totalJobTitles]]);
 
@@ -48,7 +48,6 @@ class JobTitleController extends BaseController
     {
         $this->authorize('create', JobTitle::class);
         $data = $request->validated();
-        $data['slug'] = generateSlug($data['title']);
         JobTitle::create($data);
 
         return back()->with('success', __('job_titles.flash.created'));

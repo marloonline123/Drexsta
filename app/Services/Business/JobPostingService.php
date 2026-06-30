@@ -17,7 +17,7 @@ class JobPostingService
             'job_requisition_id' => $requisition->id,
             'number' => $this->generateJobPostingNumber($company->id),
             'title' => $requisition->jobTitle->title,
-            'slug' => uniqueSlug(JobPosting::class, $data['title'] ?? $requisition->jobTitle->title),
+            'slug' => generateUniqueSlug(JobPosting::class, $data['title'] ?? $requisition->jobTitle->title),
             'description' => $requisition->job_description,
             'requirements' => $requisition->requirements,
             'min_salary' => $requisition->min_salary,

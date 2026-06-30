@@ -44,7 +44,7 @@ class PaymentMethodController extends BaseController
         $data = $request->validated();
         PaymentMethod::create($data + [
             'company_id' => request()->user()->active_company_id,
-            'slug' => uniqueSlug(PaymentMethod::class, $request->input('name')),
+            'slug' => generateUniqueSlug(PaymentMethod::class, $request->input('name')),
         ]);
 
         return redirect()->route('dashboard.payment-methods.index')
