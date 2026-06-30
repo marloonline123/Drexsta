@@ -56,8 +56,8 @@ return [
             'status' => 'Enable or disable this job title',
         ],
         'placeholder' => [
-            'title' => 'ادخل المسمى الوظيفي',
-            'description' => 'ادخل وصف المسمى الوظيفي' 
+            'title' => 'Enter job title name',
+            'description' => 'Enter job title description' 
         ],
         'actions' => [
             'cancel' => 'Cancel',

@@ -6,6 +6,14 @@ use Illuminate\Database\Eloquent\Builder;
 
 trait HasFilterByScope
 {
+    /**
+     * Filter the query by a specific column and value.
+     *
+     * @param  string  $filter  The column name to filter based on.
+     * @param  array|string|int|null  $value  The value to filter by.
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    
     public function scopeFilterBy(Builder $query, string $filter, array|string|int|null $value): Builder
     {
         if (empty($filter) || is_null($value)) {

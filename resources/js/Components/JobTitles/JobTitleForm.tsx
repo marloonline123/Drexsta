@@ -52,7 +52,7 @@ export default function JobTitleForm({ action, jobTitle, method = 'post', onSucc
 
                     {/* Form Actions */}
                     <div className="flex items-center justify-end gap-4 border-t pt-6">
-                        <Link href="/dashboard/job-titles" className={buttonVariants({ variant: 'outline' })}>
+                        <Link href={route('dashboard.job-titles.index')} className={buttonVariants({ variant: 'outline' })}>
                             {translate('job_titles.form.actions.cancel')}
                         </Link>
                         <Button type="submit" disabled={processing}>

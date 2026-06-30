@@ -30,7 +30,10 @@ class JobTitleRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => ['required', 'string', 'max:255', 
+            'title' => [
+                'required',
+                'string',
+                'max:255',
                 (new UniqueScoped('job_titles', 'title', 'company_id', request()->user()->active_company_id))->except($this->job_title?->id ?? 0)
             ],
             'description' => 'nullable|string|max:500',
